@@ -25,6 +25,7 @@ buildGoModule (finalAttrs: {
 
   meta = {
     description = "Generates an ORM for Go based on a database schema";
+    mainProgram = "bobgen-sql";
     homepage = "https://github.com/stephenafamo/bob";
     changelog = "https://github.com/stephenafamo/bob/releases/tag/v${finalAttrs.version}";
     license = lib.licenses.mit;
