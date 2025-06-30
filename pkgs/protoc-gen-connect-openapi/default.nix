@@ -5,7 +5,7 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "protoc-gen-connect-openapi";
-  version = "0.18.0";
+  version = "0.17.0";
 
   src = fetchFromGitHub {
     owner = "sudorandom";

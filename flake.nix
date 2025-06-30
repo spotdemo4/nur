@@ -18,6 +18,7 @@
             git
             nix-update
             alejandra
+            renovate
           ];
         };
       }
