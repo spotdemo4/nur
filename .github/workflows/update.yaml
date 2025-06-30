@@ -13,13 +13,13 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
       - uses: nicknovitski/nix-develop@9be7cfb4b10451d3390a75dc18ad0465bed4932a # v1.2.1
 
-      - run: ./auto-update.sh
-
-      - uses: actions/create-github-app-token@df432ceedc7162793a195dd1713ff69aefc7379e # v2.0.6
-        id: token
+      - uses: spotdemo4/setup-git-app-user@51cf8f3366b74a6b7e830d1cfc63b3526a036925 # v2
+        id: app-user
         with:
           app-id: ${{ vars.CLIENT_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+
+      - run: ./auto-update.sh
 
       - uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e # v7.0.8
         id: cpr
@@ -31,7 +31,7 @@ jobs:
       - name: Enable Automerge
         if: ${{ steps.cpr.outputs.pull-request-number }}
         env:
-          GH_TOKEN: ${{ steps.token.outputs.token }}
+          GH_TOKEN: ${{ steps.app-user.outputs.token }}
         run: >
           gh pr merge
           --rebase
