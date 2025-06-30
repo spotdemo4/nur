@@ -25,9 +25,8 @@ jobs:
         id: cpr
         with:
           token: ${{ steps.token.outputs.token }}
-          title: update
-          body: package update
-          commit-message: "chore: update"
+          title: package updates
+          body: updated some packages
 
       - name: Enable Automerge
         if: ${{ steps.cpr.outputs.pull-request-number }}
@@ -35,9 +34,8 @@ jobs:
           GH_TOKEN: ${{ steps.token.outputs.token }}
         run: >
           gh pr merge
-          --squash
+          --rebase
           --auto
-          --subject "chore: update"
           "${{ steps.cpr.outputs.pull-request-number }}"
 
   renovate:
