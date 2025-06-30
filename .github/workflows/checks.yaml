@@ -31,7 +31,7 @@ jobs:
     - name: Show nixpkgs version
       run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
 
-    - uses: https://github.com/DeterminateSystems/flake-checker-action@0af51e37404acfb298f7e2eec77470be27eb57c5 # v10
+    - uses: DeterminateSystems/flake-checker-action@0af51e37404acfb298f7e2eec77470be27eb57c5 # v10
       with:
         send-statistics: false
 
