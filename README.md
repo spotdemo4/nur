@@ -1,6 +1,7 @@
 # trev's [nur](https://github.com/nix-community/NUR) repository
 
 [![checks status](https://img.shields.io/github/actions/workflow/status/spotdemo4/nur/checks.yaml?logo=github&label=checks&labelColor=%2311111b)](https://github.com/spotdemo4/nur/actions/workflows/checks.yaml)
+[![checks status](https://img.shields.io/github/actions/workflow/status/spotdemo4/nur/flake.yaml?logo=nixos&logoColor=%2389dceb&label=flake&labelColor=%2311111b)](https://github.com/spotdemo4/nur/actions/workflows/flake.yaml)
 [![cachix](https://img.shields.io/badge/cachix-trevnur-%23313244?logo=nixos&logoColor=%2389dceb&labelColor=%2311111b)](https://trevnur.cachix.org)
 
 ### devshell example
