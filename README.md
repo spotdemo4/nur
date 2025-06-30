@@ -34,7 +34,7 @@
       system: let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [nur.overlay];
+          overlays = [nur.overlays.default];
         };
       in {
         devShells.default = pkgs.mkShell {
