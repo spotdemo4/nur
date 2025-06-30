@@ -5,6 +5,6 @@ readarray -d " " PKGS < <(nix eval --raw ".#packages.${SYSTEM}" --apply "attrs: 
 
 for PKG in "${PKGS[@]}"; do
     printf "Updating %s...\n" "${PKG}"
-    eval nix-update "${PKG}" --commit
+    eval nix-update --commit "${PKG}"
     printf "Successfully updated %s\n\n" "${PKG}"
 done
