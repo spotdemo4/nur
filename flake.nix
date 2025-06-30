@@ -9,7 +9,9 @@
   }: let
     forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
   in {
-    devShells = forAllSystems ({pkgs, ...}: {
+    devShells = forAllSystems (system: let
+      pkgs = import nixpkgs {inherit system;};
+    in {
       default = pkgs.mkShell {
         packages = with pkgs; [
           git
@@ -22,7 +24,7 @@
 
     legacyPackages = forAllSystems (system:
       import ./default.nix {
-        pkgs = import nixpkgs {inherit system;};
+        pkgs = nixpkgs.legacyPackages."${system}";
       });
 
     packages = forAllSystems (system: nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system});
