@@ -2,7 +2,7 @@
   description = "Trev's NUR repository";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable?rev=d55716bb59b91ae9d1ced4b1ccdea7a442ecbfdb";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
