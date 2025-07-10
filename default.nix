@@ -7,10 +7,12 @@
   overlays = import ./overlays; # nixpkgs overlays
 
   # libraries
-  opam-nix = import ./libs/opam-nix;
+  opam-nix = import ./libs/opam-nix/src/opam.nix {
+    inherit pkgs;
+  };
 
   # packages
   bobgen = pkgs.callPackage ./pkgs/bobgen {};
   protoc-gen-connect-openapi = pkgs.callPackage ./pkgs/protoc-gen-connect-openapi {};
-  opengrep = pkgs.callPackage ./pkgs/opengrep {inherit system pkgs opam-nix;};
+  opengrep = pkgs.callPackage ./pkgs/opengrep {inherit pkgs opam-nix;};
 }

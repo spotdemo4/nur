@@ -1,5 +1,4 @@
 {
-  system,
   pkgs,
   opam-nix,
 }: let
@@ -17,8 +16,6 @@
     fetchSubmodules = true;
   };
 
-  on = (import opam-nix).lib."${system}";
-
   query = {
     # You can force versions of certain packages here
     ocaml-base-compiler = "5.3.0";
@@ -33,7 +30,7 @@
   };
 
   scope =
-    on.buildOpamProject' {
+    opam-nix.buildOpamProject' {
       pkgs = pkgs;
       repos = [opam-repository];
     }
