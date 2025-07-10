@@ -2,9 +2,11 @@
   system,
   pkgs,
 }: let
-  opan-nix = builtins.fetchTarball {
-    url = "https://github.com/tweag/opam-nix/archive/main.tar.gz";
-    sha256 = "sha256:1ijryni1fkh2iq0dy0j0s960wbw7c94kjxa0iivh16afccakb2gd";
+  opan-nix = pkgs.fetchFromGitHub {
+    owner = "tweag";
+    repo = "opam-nix";
+    rev = "dd669ba8909880f69def7878fc912a97923709d5";
+    hash = "sha256-7Yk1FWNOmQB3jEB1OUlihy8OTNJAAt8AjgJOF6L1WcY=";
   };
   opan-repository = pkgs.fetchFromGitHub {
     owner = "ocaml";
