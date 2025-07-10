@@ -1,13 +1,8 @@
 {
   system,
   pkgs,
+  opam-nix,
 }: let
-  opam-nix = pkgs.fetchFromGitHub {
-    owner = "tweag";
-    repo = "opam-nix";
-    rev = "dd669ba8909880f69def7878fc912a97923709d5";
-    hash = "sha256-7Yk1FWNOmQB3jEB1OUlihy8OTNJAAt8AjgJOF6L1WcY=";
-  };
   opam-repository = pkgs.fetchFromGitHub {
     owner = "ocaml";
     repo = "opam-repository";

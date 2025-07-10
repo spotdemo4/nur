@@ -2,6 +2,7 @@
   description = "Trev's NUR repository";
 
   inputs = {
+    self.submodules = true;
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nur = {
       url = "github:nix-community/NUR";
