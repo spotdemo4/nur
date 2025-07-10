@@ -10,15 +10,15 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
     nur,
+    ...
   }: let
     forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
   in {
     devShells = forAllSystems (
       system: let
-        pkgs = import nixpkgs rec {
+        pkgs = import nixpkgs {
           inherit system;
           overlays = [
             nur.legacyPackages."${system}".repos.trev.overlays.renovate
@@ -36,16 +36,12 @@
       }
     );
 
-    legacyPackages = forAllSystems (
-      system:
-        import ./default.nix {
-          pkgs = nixpkgs.legacyPackages."${system}";
-        }
-    );
-
     packages = forAllSystems (
       system:
-        nixpkgs.lib.filterAttrs (_: v: nixpkgs.lib.isDerivation v) self.legacyPackages.${system}
+        import ./default.nix {
+          inherit system;
+          pkgs = nixpkgs.legacyPackages."${system}";
+        }
     );
   };
 }
