@@ -2,13 +2,13 @@
   system,
   pkgs,
 }: let
-  opan-nix = pkgs.fetchFromGitHub {
+  opam-nix = pkgs.fetchFromGitHub {
     owner = "tweag";
     repo = "opam-nix";
     rev = "dd669ba8909880f69def7878fc912a97923709d5";
     hash = "sha256-7Yk1FWNOmQB3jEB1OUlihy8OTNJAAt8AjgJOF6L1WcY=";
   };
-  opan-repository = pkgs.fetchFromGitHub {
+  opam-repository = pkgs.fetchFromGitHub {
     owner = "ocaml";
     repo = "opam-repository";
     rev = "0802514b70b2024a6cd3a5b69a639c1a4b68ecdc";
@@ -22,7 +22,7 @@
     fetchSubmodules = true;
   };
 
-  on = (import opan-nix).lib."${system}";
+  on = (import opam-nix).lib."${system}";
 
   query = {
     # You can force versions of certain packages here
@@ -40,7 +40,7 @@
   scope =
     on.buildOpamProject' {
       pkgs = pkgs;
-      repos = [opan-repository];
+      repos = [opam-repository];
     }
     source
     query;
