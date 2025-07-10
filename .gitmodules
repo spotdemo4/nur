@@ -1,0 +1,3 @@
+[submodule "libs/opam-nix"]
+	path = libs/opam-nix
+	url = https://github.com/tweag/opam-nix.git
