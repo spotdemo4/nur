@@ -49,5 +49,6 @@ in
         description = common.meta.description + " - core binary";
         mainProgram = "opengrep-core";
         sourceProvenance = with lib.sourceTypes; [binaryNativeCode];
+        platforms = lib.attrNames binaries;
       };
   }
