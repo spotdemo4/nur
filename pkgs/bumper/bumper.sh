@@ -52,5 +52,5 @@ git stash pop
 
 echo "bump successful, please push:"
 echo "${bold}git push --atomic origin ${git_branch} \"v${next_version}\"${normal}"
-wl-copy "git push --atomic origin ${git_branch} \"v${next_version}\"${normal}"
+wl-copy "git push --atomic origin ${git_branch} \"v${next_version}\"${normal}" || true
 echo
