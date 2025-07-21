@@ -17,6 +17,7 @@ writeShellApplication {
 
   meta = {
     description = "Version bumper";
+    mainProgram = "bumper";
     homepage = "https://github.com/spotdemo4/nur/tree/main/pkgs/bumper/bumper.sh";
     platforms = lib.platforms.all;
   };
