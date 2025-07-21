@@ -32,7 +32,7 @@ fi
 if [ -f flake.nix ]; then
     echo "bumping flake.nix"
     cd "${git_root}"
-    nix-update --flake --version "${next_version}" default
+    nix-update --flake --quiet --version "${next_version}" default
     git add flake.nix
 fi
 
@@ -50,6 +50,7 @@ git tag -a "v${next_version}" -m "bump: v${version} -> v${next_version}"
 echo "unstashing changes"
 git stash pop || true
 
+echo
 echo "bump successful, please push:"
 echo "${bold}git push --atomic origin ${git_branch} v${next_version}${normal}"
 wl-copy "git push --atomic origin ${git_branch} v${next_version}" || true
