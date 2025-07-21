@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 bold=$(tput bold)
 normal=$(tput sgr0)
 git_branch=$(git rev-parse --abbrev-ref HEAD)
