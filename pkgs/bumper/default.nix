@@ -8,6 +8,7 @@ writeShellApplication {
 
   runtimeInputs = with pkgs; [
     git
+    nix-update
     wl-clipboard
     wl-clipboard-x11
   ];
