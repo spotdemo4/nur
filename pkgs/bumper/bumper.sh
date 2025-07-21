@@ -19,7 +19,7 @@ next_version="${major}.${minor}.${patch}"
 echo "${version} -> ${next_version}"
 
 echo "stashing changes"
-git stash
+git stash push
 
 if [ -f package.json ]; then
     echo "bumping package.json"
@@ -48,7 +48,7 @@ git commit -m "bump: v${version} -> v${next_version}"
 git tag -a "v${next_version}" -m "bump: v${version} -> v${next_version}"
 
 echo "unstashing changes"
-git stash pop
+git stash pop || true
 
 echo "bump successful, please push:"
 echo "${bold}git push --atomic origin ${git_branch} \"v${next_version}\"${normal}"
