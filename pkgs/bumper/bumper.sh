@@ -42,9 +42,7 @@ if [ -f openapi.yaml ]; then
     echo "bumping openapi"
     cd "${git_root}"
     sed -i -e "s/${version}/${next_version}/g" openapi.yaml
-    sed -i -e "s/${version}/${next_version}/g" static/openapi/openapi.yaml
     git add openapi.yaml
-    git add static/openapi/openapi.yaml
 fi
 
 echo "committing"
