@@ -32,7 +32,7 @@ fi
 if [ -f flake.nix ]; then
     echo "bumping flake.nix"
     cd "${git_root}"
-    nix-update --flake --quiet --version "${next_version}" default
+    nix-update --flake --version "${next_version}" default
     git add flake.nix
 fi
 
