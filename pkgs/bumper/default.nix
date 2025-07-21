@@ -16,7 +16,7 @@ writeShellApplication {
   text = builtins.readFile ./bumper.sh;
 
   meta = {
-    description = "Version bumper";
+    description = "Git version bumper";
     mainProgram = "bumper";
     homepage = "https://github.com/spotdemo4/nur/tree/main/pkgs/bumper/bumper.sh";
     platforms = lib.platforms.all;
