@@ -51,6 +51,6 @@ echo "unstashing changes"
 git stash pop || true
 
 echo "bump successful, please push:"
-echo "${bold}git push --atomic origin ${git_branch} \"v${next_version}\"${normal}"
-wl-copy "git push --atomic origin ${git_branch} \"v${next_version}\"${normal}" || true
+echo "${bold}git push --atomic origin ${git_branch} v${next_version}${normal}"
+wl-copy "git push --atomic origin ${git_branch} v${next_version}" || true
 echo
