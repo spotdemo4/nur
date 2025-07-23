@@ -10,17 +10,19 @@ on:
   workflow_dispatch:
 
 jobs:
-  flake:
+  synced:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: Compare revs
+      - name: Get repos.json
         run: |
           curl -o repos.json "https://raw.githubusercontent.com/nix-community/NUR/refs/heads/main/repos.json.lock"
           echo "REPOS_JSON=$(jq -c . < repos.json)" >> $GITHUB_ENV
 
+      - name: Compare revs
+        run: |
           NUR_REV='${{ fromJson(env.REPOS_JSON).repos.trev.rev }}'
           echo "nur rev: ${NUR_REV}"
 
