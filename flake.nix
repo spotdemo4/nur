@@ -58,13 +58,13 @@
       pkgs.nur.repos.trev.lib.mkChecks {
         lint = {
           src = ./.;
-          nativeBuildInputs = with pkgs; [
+          deps = with pkgs; [
             alejandra
             prettier
-            renovate
+            pkgs.nur.repos.trev.renovate
             action-validator
           ];
-          checkPhase = ''
+          script = ''
             alejandra -c .
             prettier --check .
             renovate-config-validator
