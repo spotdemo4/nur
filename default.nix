@@ -10,6 +10,7 @@
   bobgen = pkgs.callPackage ./pkgs/bobgen {};
   bumper = pkgs.callPackage ./pkgs/bumper {};
   nix-update = pkgs.callPackage ./pkgs/nix-update {};
+  nix-fix-hash = pkgs.callPackage ./pkgs/nix-fix-hash {};
   protoc-gen-connect-openapi = pkgs.callPackage ./pkgs/protoc-gen-connect-openapi {};
   opengrep = pkgs.callPackage ./pkgs/opengrep {};
   renovate = pkgs.callPackage ./pkgs/renovate {};
