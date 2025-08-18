@@ -1,17 +1,21 @@
 {
-  pkgs,
   fetchFromGitHub,
-  runtimeShell,
   lib,
+  nix-update-script,
+  pkgs,
+  runtimeShell,
 }:
 pkgs.stdenv.mkDerivation (finalAttrs: {
-  name = "shellhook";
+  pname = "nix-fix-hash";
+  version = "0.0.1";
+
   src = fetchFromGitHub {
     owner = "spotdemo4";
     repo = "nix-fix-hash";
-    tag = "v0.0.1";
+    tag = "v${finalAttrs.version}";
     hash = "sha256-rQnjZ9bSU2qj9cJmwtHdMeok2BuRpo0eVCTXZ3TXJf0=";
   };
+
   dontBuild = true;
 
   nativeBuildInputs = with pkgs; [
@@ -48,6 +52,15 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
     mkdir -p $out/bin
     cp nix-fix-hash $out/bin/nix-fix-hash
   '';
+
+  passthru = {
+    updateScript = lib.concatStringsSep " " (nix-update-script {
+      extraArgs = [
+        "--commit"
+        "${finalAttrs.pname}"
+      ];
+    });
+  };
 
   meta = {
     description = "Nix hash fixer";
