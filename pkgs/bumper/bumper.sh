@@ -2,7 +2,7 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 git_branch=$(git rev-parse --abbrev-ref HEAD)
 git_root=$(git rev-parse --show-toplevel)
-git_version=$(git describe --tags $(git rev-list --tags --max-count=1))
+git_version=$(git describe --tags "$(git rev-list --tags --max-count=1)")
 version=${git_version#v}
 
 major=$(echo "${version}" | cut -d . -f1)
