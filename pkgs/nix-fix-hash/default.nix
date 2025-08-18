@@ -1,29 +1,58 @@
 {
   pkgs,
   fetchFromGitHub,
-  writeShellApplication,
-}: let
-  source = fetchFromGitHub {
+  runtimeShell,
+  lib,
+}:
+pkgs.stdenv.mkDerivation (finalAttrs: {
+  name = "shellhook";
+  src = fetchFromGitHub {
     owner = "spotdemo4";
     repo = "nix-fix-hash";
     tag = "v0.0.1";
     hash = "sha256-rQnjZ9bSU2qj9cJmwtHdMeok2BuRpo0eVCTXZ3TXJf0=";
   };
-in
-  writeShellApplication {
-    name = "nix-fix-hash";
+  dontBuild = true;
 
-    runtimeInputs = with pkgs; [
-      nix
-      ncurses
-    ];
+  nativeBuildInputs = with pkgs; [
+    shellcheck-minimal
+  ];
 
-    text = builtins.readFile "${source}/nix-fix-hash.sh";
+  runtimeInputs = with pkgs; [
+    nix
+    ncurses
+  ];
 
-    meta = {
-      description = "Nix hash fixer";
-      mainProgram = "nix-fix-hash";
-      homepage = "https://github.com/spotdemo4/nix-fix-hash";
-      platforms = pkgs.lib.platforms.all;
-    };
-  }
+  unpackPhase = ''
+    cp "$src/nix-fix-hash.sh" .
+  '';
+
+  configurePhase = ''
+    echo "#!${runtimeShell}" >> nix-fix-hash
+    echo "${lib.concatMapStringsSep "\n" (option: "set -o ${option}") [
+      "errexit"
+      "nounset"
+      "pipefail"
+    ]}" >> nix-fix-hash
+    echo 'export PATH="${lib.makeBinPath finalAttrs.runtimeInputs}:$PATH"' >> nix-fix-hash
+    cat nix-fix-hash.sh >> nix-fix-hash
+    chmod +x nix-fix-hash
+  '';
+
+  doCheck = true;
+  checkPhase = ''
+    shellcheck ./nix-fix-hash
+  '';
+
+  installPhase = ''
+    mkdir -p $out/bin
+    cp nix-fix-hash $out/bin/nix-fix-hash
+  '';
+
+  meta = {
+    description = "Nix hash fixer";
+    mainProgram = "nix-fix-hash";
+    homepage = "https://github.com/spotdemo4/nix-fix-hash";
+    platforms = pkgs.lib.platforms.all;
+  };
+})
