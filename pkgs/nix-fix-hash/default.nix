@@ -8,7 +8,6 @@
     repo = "nix-fix-hash";
     tag = "v0.0.1";
     hash = "sha256-rQnjZ9bSU2qj9cJmwtHdMeok2BuRpo0eVCTXZ3TXJf0=";
-    fetchSubmodules = true;
   };
 in
   writeShellApplication {
@@ -19,7 +18,7 @@ in
       ncurses
     ];
 
-    text = builtins.readFile (source + "/nix-fix-hash.sh");
+    text = builtins.readFile "${source}/nix-fix-hash.sh";
 
     meta = {
       description = "Nix hash fixer";
