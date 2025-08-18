@@ -16,12 +16,17 @@
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-fix-hash = {
+      url = "github:spotdemo4/nix-fix-hash";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     nur,
+    nix-fix-hash,
   }: let
     forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
   in rec {
@@ -82,6 +87,9 @@
         import ./default.nix {
           inherit system;
           pkgs = nixpkgs.legacyPackages."${system}";
+        }
+        // {
+          nix-fix-hash = nix-fix-hash.packages."${system}".default;
         }
     );
 

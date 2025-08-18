@@ -9,9 +9,6 @@
   # packages
   bobgen = pkgs.callPackage ./pkgs/bobgen {};
   bumper = pkgs.callPackage ./pkgs/bumper {};
-  nix-fix-hash = pkgs.callPackage ./pkgs/nix-fix-hash {
-    inherit system;
-  };
   nix-update = pkgs.callPackage ./pkgs/nix-update {};
   opengrep = pkgs.callPackage ./pkgs/opengrep {};
   protoc-gen-connect-openapi = pkgs.callPackage ./pkgs/protoc-gen-connect-openapi {};
