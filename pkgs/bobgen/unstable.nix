@@ -7,13 +7,13 @@
 }:
 bobgen.overrideAttrs
 (final: prev: {
-  version = "0.40.2-unstable-2025-08-16";
+  version = "0.40.2-unstable-2025-08-19";
 
   src = fetchFromGitHub {
     owner = "stephenafamo";
     repo = "bob";
-    rev = "028664aed3dbc9a73fb2028b4c224f915456cadc";
-    hash = "sha256-NqCLy74y7IG8YTb4VbJUrVG7iITyNK3a1S9gENBOVbk=";
+    rev = "2ca61849c6db06703a82095ddb64e454921beb60";
+    hash = "sha256-y6UZAn4evzWe91ChEzEvZQgsWHxcu5oAlRSPF8j3hZU=";
   };
 
   vendorHash = "sha256-3K5ByPBrZRsLcmp0JMNLCcLqQdQizTdxN1Q7B4xe9vc=";
