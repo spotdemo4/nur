@@ -14,13 +14,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "renovate";
-  version = "41.76.0";
+  version = "41.82.10";
 
   src = fetchFromGitHub {
     owner = "renovatebot";
     repo = "renovate";
     tag = finalAttrs.version;
-    hash = "sha256-BiJtSCnYbuGlM1SF+M5iWWA3CvUc7xv15PY8NBGRYWg=";
+    hash = "sha256-9GU71HDyIGAi383Qn6OWEPUCfsr8RW6WniHQWLDhMmI=";
   };
 
   patches = [
@@ -45,7 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
   pnpmDeps = pnpm_10.fetchDeps {
     inherit (finalAttrs) pname version src;
     fetcherVersion = 2;
-    hash = "sha256-W4HTBd/mGkV2NMpvn9MB4qeJWqZlyWvwfa46HKoUCYo=";
+    hash = "11.8.6";
   };
 
   env.COREPACK_ENABLE_STRICT = 0;
