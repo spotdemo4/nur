@@ -39,16 +39,31 @@ if ! git diff --staged --quiet || ! git diff --quiet; then
 fi
 
 # git info
-git_branch=$(git rev-parse --abbrev-ref HEAD)
-git_root=$(git rev-parse --show-toplevel)
-git_version=$(git describe --tags "$(git rev-list --tags --max-count=1)")
-files=$(git ls-files)
+if ! git_root=$(git rev-parse --show-toplevel) &> /dev/null; then
+    warn "not a git repository"
+    exit 1
+fi
+
+if ! git_branch=$(git rev-parse --abbrev-ref HEAD) &> /dev/null; then
+    warn "not on a branch"
+    exit 1
+fi
+
+if ! git_version=$(git describe --tags "$(git rev-list --tags --max-count=1)") &> /dev/null; then
+    warn "no git tags found, please create a tag first"
+    exit 1
+fi
+
+if ! files=$(git ls-files) &> /dev/null; then
+    warn "failed to get list of tracked files"
+    exit 1
+fi
 
 # get next version
 version=${git_version#v}
-major=$(echo "${version}" | cut -d . -f1)
-minor=$(echo "${version}" | cut -d . -f2)
-patch=$(echo "${version}" | cut -d . -f3)
+major=$(echo "${version}" | cut -s -d . -f 1)
+minor=$(echo "${version}" | cut -s -d . -f 2)
+patch=$(echo "${version}" | cut -s -d . -f 3)
 case "${1-patch}" in
     major) 
         major=$((major + 1))
@@ -59,8 +74,13 @@ case "${1-patch}" in
         minor=$((minor + 1))
         patch=0
         ;;
-    patch) patch=$((patch + 1)) ;;
-    *) echo "usage: bumper (major | minor | patch)" && exit ;;
+    patch)
+        patch=$((patch + 1))
+        ;;
+    *)
+        echo "usage: bumper (major | minor | patch)"
+        exit
+        ;;
 esac
 next_version="${major}.${minor}.${patch}"
 info "${version} -> ${next_version}"
