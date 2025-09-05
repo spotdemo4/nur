@@ -3,6 +3,7 @@
 reset_color=""
 bold_color=""
 info_color=""
+dialog_color=""
 warn_color=""
 success_color=""
 
@@ -12,17 +13,22 @@ if colors=$(tput colors 2> /dev/null); then
 
     if [[ "$colors" -ge 256 ]]; then
         info_color=$(tput setaf 189)
+        dialog_color=$(tput setaf 246)
         warn_color=$(tput setaf 216)
         success_color=$(tput setaf 117)
     fi
 fi
 
 function bold {
-    printf "%s%s%s\n" "${bold_color}" "$1" "${reset_color}"
+    printf "\n%s%s%s\n" "${bold_color}" "$1" "${reset_color}"
 }
 
 function info {
     printf "%s%s%s\n" "${info_color}" "$1" "${reset_color}"
+}
+
+function dialog {
+    printf "%s%s%s\n" "${dialog_color}" "$1" "${reset_color}"
 }
 
 function warn {
@@ -39,23 +45,18 @@ if ! git diff --staged --quiet || ! git diff --quiet; then
 fi
 
 # git info
-if ! git_root=$(git rev-parse --show-toplevel); then
+if ! git_root=$(git rev-parse --show-toplevel 2>/dev/null); then
     warn "not a git repository"
     exit 1
 fi
 
-if ! git_branch=$(git rev-parse --abbrev-ref HEAD); then
+if ! git_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null); then
     warn "not on a branch"
     exit 1
 fi
 
-if ! git_version=$(git describe --tags "$(git rev-list --tags --max-count=1)"); then
+if ! git_version=$(git describe --tags "$(git rev-list --tags --max-count=1 2>/dev/null)" 2>/dev/null); then
     warn "no git tags found, please create a tag first"
-    exit 1
-fi
-
-if ! files=$(git ls-files); then
-    warn "failed to get list of tracked files"
     exit 1
 fi
 
@@ -83,66 +84,72 @@ case "${1-patch}" in
         ;;
 esac
 next_version="${major}.${minor}.${patch}"
-info "${version} -> ${next_version}"
-
-# helper to replace version in a file
-function replace {
-    sed -i "s/${version}/${next_version}/g" "${1}"
-    grep -q "${next_version}" "${1}"
-}
+bold "$(info "${version} -> ${next_version}")"
 
 # perform bumps
 cd "${git_root}"
+readarray -t files < <(git ls-files)
 
-# node
-if echo "${files}" | grep -i package.json; then
-    info "bumping package.json"
-    if err=$(npm version "${next_version}" --no-git-tag-version > /dev/null); then
-        git add package.json
-        git add package-lock.json
-    else
-        warn "npm version failed: ${err}"
-    fi
-fi
+for file in "${files[@]}"; do
+    case "${file}" in
+        "package.json" | "package-lock.json")
+            if err=$(npm version "${next_version}" --no-git-tag-version --allow-same-version 2>&1 >/dev/null); then
+                git add package.json
+                git add package-lock.json
+            else
+                bold "$(warn "npm version failed")"
+                warn "${err}"
+            fi
+            ;;
 
-# nix
-if echo "${files}" | grep -i flake.nix; then
-    info "bumping flake.nix"
-    if err=$(nix-update --flake --version "${next_version}" default > /dev/null); then
-        git add flake.nix
-    else
-        warn "nix-update failed: ${err}"
-    fi
-fi
+        "flake.nix")
+            if err=$(nix-update --flake --version "${next_version}" default 2>&1 >/dev/null); then
+                git add flake.nix
+            else
+                bold "$(warn "nix-update failed")"
+                warn "${err}"
+            fi
+            ;;
 
-# openapi
-echo "${files}" | grep -i "openapi.\(yml\|yaml\)" | while read -r openapi; do
-    info "bumping ${openapi}"
-    if replace "${openapi}"; then
-        git add "${openapi}"
-    fi
-done
+        *)
+            readarray -t lines < <(grep "${version}" "${file}")
+            if [[ ${#lines[@]} -eq 0 ]]; then
+                continue
+            fi
 
-# readme
-echo "${files}" | grep -i readme | while read -r readme; do
-    info "bumping ${readme}"
-    if replace "${readme}"; then
-        git add "${readme}"
-    fi
+            bold "$(info "${file}")"
+
+            for line in "${lines[@]}"; do
+                trim=$(echo "${line}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+                info "${trim}"
+            done
+
+            read -n 1 -p "$(dialog "replace? [Y/n] ")" reply
+            if [[ "${reply}" =~ ^[Nn]$ ]]; then
+                continue
+            fi
+
+            sed -i "s/${version}/${next_version}/g" "${file}"
+            if grep -q "${next_version}" "${file}"; then
+                git add "${file}"
+            else
+                warn "failed to replace version in ${file}"
+                continue
+            fi
+            ;;
+    esac
 done
 
 # check for staged changes
 if git diff --staged --quiet; then
-    warn "no changes to commit"
+    bold "$(warn "no changes to commit")"
     exit 1
 fi
 
-info "committing"
+echo
 git commit -m "bump: v${version} -> v${next_version}"
 git tag -a "v${next_version}" -m "bump: v${version} -> v${next_version}"
 
-echo
-success "bump successful, please push:"
-bold "$(success "git push --atomic origin ${git_branch} v${next_version}")"
+bold "$(success "bump successful!")"
+success "git push --atomic origin ${git_branch} v${next_version}"
 wl-copy "git push --atomic origin ${git_branch} v${next_version}" || true
-echo
