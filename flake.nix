@@ -12,16 +12,11 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
     self,
     nixpkgs,
-    nur,
   }: let
     forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
   in rec {
@@ -29,10 +24,10 @@
       system: let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [nur.overlays.default];
         };
-        trev = pkgs.nur.repos.trev;
         update = pkgs.callPackage ./update.nix {};
+        patched-renovate = pkgs.callPackage ./pkgs/renovate {};
+        shellhook = pkgs.callPackage ./pkgs/shellhook {};
       in {
         default = pkgs.mkShell {
           packages = with pkgs; [
@@ -41,9 +36,9 @@
             flake-checker
             prettier
             action-validator
-            trev.renovate
+            patched-renovate
           ];
-          shellHook = trev.shellhook.ref;
+          shellHook = shellhook.ref;
         };
       }
     );
@@ -51,18 +46,18 @@
     checks = forAllSystems (system: let
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [nur.overlays.default];
       };
-      trev = pkgs.nur.repos.trev;
+      lib = import ./lib {inherit pkgs;};
+      patched-renovate = pkgs.callPackage ./pkgs/renovate {};
     in
-      trev.lib.mkChecks {
+      lib.mkChecks {
         lint = {
           src = ./.;
           deps = with pkgs; [
             alejandra
             prettier
             action-validator
-            trev.renovate
+            patched-renovate
           ];
           script = ''
             alejandra -c .
