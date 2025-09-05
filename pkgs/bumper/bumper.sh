@@ -124,7 +124,7 @@ for file in "${files[@]}"; do
                 info "${trim}"
             done
 
-            read -n 1 -p "$(dialog "replace? [Y/n] ")" reply
+            read -r -n 1 -p "$(dialog "replace? [Y/n] ")" reply
             if [[ "${reply}" =~ ^[Nn]$ ]]; then
                 continue
             fi
