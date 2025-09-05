@@ -1,5 +1,5 @@
 {
-  description = "Trev's NUR repository";
+  description = "Trev's NUR";
 
   nixConfig = {
     extra-substituters = [
@@ -31,20 +31,19 @@
           inherit system;
           overlays = [nur.overlays.default];
         };
-
+        trev = pkgs.nur.repos.trev;
         update = pkgs.callPackage ./update.nix {};
       in {
         default = pkgs.mkShell {
           packages = with pkgs; [
             update
-            git
-            nix-update
             alejandra
+            flake-checker
             prettier
             action-validator
-            pkgs.nur.repos.trev.renovate
+            trev.renovate
           ];
-          shellHook = pkgs.nur.repos.trev.shellhook.ref;
+          shellHook = trev.shellhook.ref;
         };
       }
     );
@@ -54,21 +53,22 @@
         inherit system;
         overlays = [nur.overlays.default];
       };
+      trev = pkgs.nur.repos.trev;
     in
-      pkgs.nur.repos.trev.lib.mkChecks {
+      trev.lib.mkChecks {
         lint = {
           src = ./.;
           deps = with pkgs; [
             alejandra
             prettier
-            pkgs.nur.repos.trev.renovate
             action-validator
+            trev.renovate
           ];
           script = ''
             alejandra -c .
             prettier --check .
-            renovate-config-validator
-            action-validator .github/workflows/*
+            action-validator .github/**/*.yaml
+            renovate-config-validator .github/renovate*.json
           '';
         };
       }
