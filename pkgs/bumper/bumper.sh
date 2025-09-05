@@ -63,7 +63,7 @@ case "${1-patch}" in
     *) echo "usage: bumper (major | minor | patch)" && exit ;;
 esac
 next_version="${major}.${minor}.${patch}"
-echo "${version} -> ${next_version}"
+info "${version} -> ${next_version}"
 
 # helper to replace version in a file
 function replace {
@@ -72,10 +72,11 @@ function replace {
 }
 
 # perform bumps
+cd "${git_root}"
+
 # node
 if echo "${files}" | grep -i package.json; then
     info "bumping package.json"
-    cd "${git_root}"
     if err=$(npm version "${next_version}" --no-git-tag-version > /dev/null); then
         git add package.json
         git add package-lock.json
@@ -87,7 +88,6 @@ fi
 # nix
 if echo "${files}" | grep -i flake.nix; then
     info "bumping flake.nix"
-    cd "${git_root}"
     if err=$(nix-update --flake --version "${next_version}" default > /dev/null); then
         git add flake.nix
     else
@@ -110,6 +110,12 @@ echo "${files}" | grep -i readme | while read -r readme; do
         git add "${readme}"
     fi
 done
+
+# check for staged changes
+if git diff --staged --quiet; then
+    warn "no changes to commit"
+    exit 1
+fi
 
 info "committing"
 git commit -m "bump: v${version} -> v${next_version}"
