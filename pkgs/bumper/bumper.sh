@@ -39,22 +39,22 @@ if ! git diff --staged --quiet || ! git diff --quiet; then
 fi
 
 # git info
-if ! git_root=$(git rev-parse --show-toplevel) &> /dev/null; then
+if ! git_root=$(git rev-parse --show-toplevel); then
     warn "not a git repository"
     exit 1
 fi
 
-if ! git_branch=$(git rev-parse --abbrev-ref HEAD) &> /dev/null; then
+if ! git_branch=$(git rev-parse --abbrev-ref HEAD); then
     warn "not on a branch"
     exit 1
 fi
 
-if ! git_version=$(git describe --tags "$(git rev-list --tags --max-count=1)") &> /dev/null; then
+if ! git_version=$(git describe --tags "$(git rev-list --tags --max-count=1)"); then
     warn "no git tags found, please create a tag first"
     exit 1
 fi
 
-if ! files=$(git ls-files) &> /dev/null; then
+if ! files=$(git ls-files); then
     warn "failed to get list of tracked files"
     exit 1
 fi
