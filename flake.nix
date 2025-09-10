@@ -79,6 +79,8 @@
         shell = devShells."${system}".default;
       });
 
+    overlays.default = import ./overlay.nix;
+
     legacyPackages = forAllSystems (
       system:
         import ./default.nix {
