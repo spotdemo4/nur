@@ -53,9 +53,9 @@
     checks = forAllSystems (system: let
       pkgs = import nixpkgs {
         inherit system;
+        renovate = pkgs.callPackage ./pkgs/renovate {};
       };
       lib = import ./lib {inherit pkgs;};
-      patched-renovate = pkgs.callPackage ./pkgs/renovate {};
     in
       lib.mkChecks {
         lint = {
@@ -64,7 +64,7 @@
             alejandra
             prettier
             action-validator
-            patched-renovate
+            renovate
           ];
           script = ''
             alejandra -c .
