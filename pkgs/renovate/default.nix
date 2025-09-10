@@ -24,7 +24,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   patches = [
-    ./37222.diff
+    ./37899.diff
   ];
 
   postPatch = ''

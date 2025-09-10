@@ -24,9 +24,16 @@
       system: let
         pkgs = import nixpkgs {
           inherit system;
+          overlays = [
+            (final: prev: {
+              renovate = pkgs.callPackage ./pkgs/renovate {};
+              nix-update-script = pkgs.callPackage ./pkgs/nix-update/update-script.nix {
+                nix-update = pkgs.callPackage ./pkgs/nix-update/unstable.nix {};
+              };
+            })
+          ];
         };
         update = pkgs.callPackage ./update.nix {};
-        patched-renovate = pkgs.callPackage ./pkgs/renovate {};
         shellhook = pkgs.callPackage ./pkgs/shellhook {};
       in {
         default = pkgs.mkShell {
@@ -36,7 +43,7 @@
             flake-checker
             prettier
             action-validator
-            patched-renovate
+            renovate
           ];
           shellHook = shellhook.ref;
         };
