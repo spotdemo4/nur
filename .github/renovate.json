@@ -1,32 +1,32 @@
 {
-	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
 
-	// self-hosted
-	"onboarding": false,
-	"requireConfig": "ignored",
-	"platform": "github",
-	"repositories": ["spotdemo4/nur"],
+  // self-hosted
+  "onboarding": false,
+  "requireConfig": "ignored",
+  "platform": "github",
+  "repositories": ["spotdemo4/nur"],
 
-	// repository
-	"extends": ["config:recommended", "group:allDigest"],
-	"branchPrefix": "renovate/",
-	"dependencyDashboardTitle": "Dependency Dashboard",
-	"lockFileMaintenance": {
-		"enabled": true,
-		"automerge": true
-	},
-	"nix": {
-		"enabled": true
-	},
-	"packageRules": [
-		{
-			"matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-			"automerge": true
-		},
-		{
-			"matchManagers": ["github-actions"],
-			"matchPackageNames": ["*"],
-			"groupName": "GitHub Actions"
-		}
-	]
+  // repository
+  "extends": ["config:recommended", "group:allDigest"],
+  "branchPrefix": "renovate/",
+  "dependencyDashboardTitle": "Dependency Dashboard",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true
+  },
+  "nix": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["*"],
+      "groupName": "GitHub Actions"
+    }
+  ]
 }
