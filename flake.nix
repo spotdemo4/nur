@@ -27,8 +27,8 @@
           overlays = [
             (final: prev: {
               renovate = pkgs.callPackage ./pkgs/renovate {};
-              nix-update-script = pkgs.callPackage ./pkgs/nix-update/update-script.nix {
-                nix-update = pkgs.callPackage ./pkgs/nix-update/unstable.nix {};
+              nix-update-script = pkgs.callPackage ./pkgs/nix-update-script {
+                nix-update = pkgs.callPackage ./pkgs/nix-update {};
               };
             })
           ];
