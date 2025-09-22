@@ -16,10 +16,6 @@ nix-update.overrideAttrs
     hash = "sha256-Zity8xKhlZmUw+Jf6ZA61bxNvhXQK1issriH01dXqqM=";
   };
 
-  patches = [
-    ./433.diff
-  ];
-
   passthru =
     prev.passthru
     // {

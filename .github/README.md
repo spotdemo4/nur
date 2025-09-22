@@ -15,7 +15,6 @@
   - Patched with [renovate#37899](https://github.com/renovatebot/renovate/pull/37899) to fix flake.lock refreshes
 - [nix-update](https://github.com/Mic92/nix-update) - Swiss-knife for updating nix packages.
   - Following branch main (unstable)
-  - Patched with [nix-update#433](https://github.com/Mic92/nix-update/pull/433) to fix pnpm updates
 - [opengrep](https://github.com/opengrep/opengrep) - Static code analysis engine to find security issues in code
 - [bumper](https://github.com/spotdemo4/nur/blob/main/pkgs/bumper/bumper.sh) - Git version bumper (ie. 0.0.1 -> 0.0.2)
 - [shellhook](https://github.com/spotdemo4/nur/blob/main/pkgs/shellhook/shellhook.sh) - Shell hook for getting info when entering git repos
