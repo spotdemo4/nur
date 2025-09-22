@@ -11,6 +11,7 @@
   nixosTests,
   nix-update-script,
   yq-go,
+  writeShellScript,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "renovate";
@@ -24,7 +25,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   patches = [
-    ./37899.diff
+    ./37222.diff
   ];
 
   postPatch = ''
@@ -98,12 +99,16 @@ stdenv.mkDerivation (finalAttrs: {
       version = testers.testVersion {package = finalAttrs.finalPackage;};
       vm-test = nixosTests.renovate;
     };
-    updateScript = lib.concatStringsSep " " (nix-update-script {
-      extraArgs = [
-        "--commit"
-        "${finalAttrs.pname}"
-      ];
-    });
+    updateScript = ''
+      ${lib.concatStringsSep " " (nix-update-script {
+        extraArgs = [
+          "--commit"
+          "${finalAttrs.pname}"
+        ];
+      })}
+      &&
+      ${writeShellScript "update" ./update.sh}
+    '';
   };
 
   meta = {
