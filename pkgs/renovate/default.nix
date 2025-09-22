@@ -11,7 +11,6 @@
   nixosTests,
   nix-update-script,
   yq-go,
-  writeShellScript,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "renovate";
@@ -100,12 +99,14 @@ stdenv.mkDerivation (finalAttrs: {
       vm-test = nixosTests.renovate;
     };
     updateScript = ''
+      wget https://patch-diff.githubusercontent.com/raw/renovatebot/renovate/pull/37899.diff -O ./pkgs/renovate/37899.diff
+
       ${lib.concatStringsSep " " (nix-update-script {
         extraArgs = [
           "--commit"
           "${finalAttrs.pname}"
         ];
-      })} && ${writeShellScript "update" ./update.sh}
+      })}
     '';
   };
 
