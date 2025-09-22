@@ -105,9 +105,7 @@ stdenv.mkDerivation (finalAttrs: {
           "--commit"
           "${finalAttrs.pname}"
         ];
-      })}
-      &&
-      ${writeShellScript "update" ./update.sh}
+      })} && ${writeShellScript "update" ./update.sh}
     '';
   };
 
