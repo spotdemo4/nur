@@ -41,12 +41,14 @@
     attrs;
 
   total = (lib.attrsets.collect lib.isDerivation topDerivations) ++ (lib.attrsets.collect lib.isDerivation subDerivations);
-  commands = map (d: ''
-    echo "updating ${d.pname}..."
-    {
-    ${d.updateScript}
-    } || echo "failed to update ${d.pname}"
-  '') total;
+  commands =
+    map (d: ''
+      echo "updating ${d.pname}..."
+      {
+      ${d.updateScript}
+      } || echo "failed to update ${d.pname}"
+    '')
+    total;
 in
   writeShellApplication {
     name = "update";
