@@ -15,6 +15,7 @@
   libva,
   libvpl,
   makeWrapper,
+  nix-update-script,
   ocl-icd,
   opencl-headers,
   pkg-config,
@@ -111,4 +112,13 @@ stdenv.mkDerivation (finalAttrs: {
 
     runHook postInstall
   '';
+
+  passthru = {
+    updateScript = lib.concatStringsSep " " (nix-update-script {
+      extraArgs = [
+        "--commit"
+        "${finalAttrs.pname}"
+      ];
+    });
+  };
 })
