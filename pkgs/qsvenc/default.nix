@@ -22,6 +22,7 @@
   stdenv,
   vpl-gpu-rt,
   wget,
+  intel-compute-runtime,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "QSVEnc";
@@ -61,6 +62,7 @@ stdenv.mkDerivation (finalAttrs: {
 
     # intel
     intel-media-driver
+    intel-compute-runtime
     vpl-gpu-rt
     cmrt
   ];
@@ -102,12 +104,15 @@ stdenv.mkDerivation (finalAttrs: {
     wrapProgram $out/bin/qsvencc \
       --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [
       intel-media-driver
+      intel-compute-runtime
       vpl-gpu-rt
       libva
       libdrm
+      ocl-icd
     ]}" \
       --set LIBVA_DRIVER_NAME iHD \
-      --prefix LIBVA_DRIVERS_PATH : "${intel-media-driver}/lib/dri"
+      --prefix LIBVA_DRIVERS_PATH : "${intel-media-driver}/lib/dri" \
+      --prefix OCL_ICD_VENDORS : "${intel-compute-runtime}/etc/OpenCL/vendors"
 
 
     runHook postInstall
