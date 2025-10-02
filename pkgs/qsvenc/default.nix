@@ -124,7 +124,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = {
     homepage = "https://github.com/rigaya/QSVEnc";
-    mainProgram = "qsvenc";
+    mainProgram = "qsvencc";
     changelog = "https://github.com/rigaya/QSVEnc/releases/tag/${finalAttrs.src.tag}";
     description = "QSV high-speed encoding performance experiment tool";
     license = lib.licenses.mit;
