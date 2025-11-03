@@ -11,19 +11,18 @@ jobs:
   packages:
     strategy:
       matrix:
-        cachixName:
-          - trevnur
-        nixPath:
+        nix_path:
           - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixpkgs-unstable.tar.gz
           - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz
           - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-25.05.tar.gz
     runs-on: ubuntu-latest
     steps:
-      - name: Initialize nix
-        uses: spotdemo4/nur/.github/actions/init@main
+      - name: Initialize
+        uses: spotdemo4/nix-init@448722165938617ea8b814719c33d73122390c9a # v1.2.0
         with:
           attic_token: ${{ secrets.ATTIC_TOKEN }}
-          nix_path: ${{ matrix.nixPath }}
+          attic_cache: nur
+          nix_package_url: ${{ matrix.nix_path }}
 
       - name: Get nixpkgs version
         run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
@@ -44,13 +43,14 @@ jobs:
   flake:
     runs-on: ubuntu-latest
     steps:
-      - name: Initialize nix
-        uses: spotdemo4/nur/.github/actions/init@main
+      - name: Initialize
+        uses: spotdemo4/nix-init@448722165938617ea8b814719c33d73122390c9a # v1.2.0
         with:
           attic_token: ${{ secrets.ATTIC_TOKEN }}
+          attic_cache: nur
 
       - name: Run flake checks
-        run: nix flake check --accept-flake-config
+        run: nix flake check
 
   trigger:
     needs: [packages, flake]

@@ -33,6 +33,7 @@
             })
           ];
         };
+
         update = pkgs.callPackage ./update.nix {};
         shellhook = pkgs.callPackage ./pkgs/shellhook {};
       in {
@@ -40,12 +41,18 @@
           packages = with pkgs; [
             update
             alejandra
-            flake-checker
             prettier
             action-validator
-            renovate
           ];
           shellHook = shellhook.ref;
+        };
+
+        ci = pkgs.mkShell {
+          packages = with pkgs; [
+            update
+            flake-checker
+            renovate
+          ];
         };
       }
     );
@@ -74,10 +81,7 @@
           '';
         };
       }
-      // packages."${system}"
-      // {
-        shell = devShells."${system}".default;
-      });
+      // packages."${system}");
 
     overlays.default = import ./overlay.nix;
 
