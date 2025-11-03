@@ -11,10 +11,10 @@ jobs:
   packages:
     strategy:
       matrix:
-        nix_path:
-          - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixpkgs-unstable.tar.gz
-          - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz
-          - nixpkgs=https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-25.05.tar.gz
+        nix_url:
+          - https://github.com/NixOS/nixpkgs/archive/refs/heads/nixpkgs-unstable.tar.gz
+          - https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz
+          - https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-25.05.tar.gz
     runs-on: ubuntu-latest
     steps:
       - name: Initialize
@@ -22,7 +22,7 @@ jobs:
         with:
           attic_token: ${{ secrets.ATTIC_TOKEN }}
           attic_cache: nur
-          nix_package_url: ${{ matrix.nix_path }}
+          nix_package_url: ${{ matrix.nix_url }}
 
       - name: Get nixpkgs version
         run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
