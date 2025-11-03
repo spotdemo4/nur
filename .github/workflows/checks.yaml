@@ -24,7 +24,7 @@ jobs:
           attic_cache: nur
 
       - name: Set nix path
-        run: echo "NIX_PATH=nixpkgs=${{ matrix.nix_path }}" >> $GITHUB_ENV"
+        run: echo "NIX_PATH="${{ matrix.nix_path }}"" >> $GITHUB_ENV"
 
       - name: Get nixpkgs version
         run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
