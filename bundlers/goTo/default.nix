@@ -40,6 +40,7 @@ drv.overrideAttrs (finalAttrs: previousAttrs: {
     upx --best --lzma "''${TMP_FILE}"
 
     cat "''${TMP_FILE}" > "''${out}"
+    chmod +x "''${out}"
   '';
 
   meta =
