@@ -52,7 +52,7 @@ in
         goos,
         goarch,
       }:
-        pkgs.lib.nameValuePair "toGo-${goos}-${goarch}"
+        pkgs.lib.nameValuePair "goTo-${goos}-${goarch}"
         (
           drv:
             import ./go.nix {
