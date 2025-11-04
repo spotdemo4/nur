@@ -1,4 +1,5 @@
 {
+  pkgs,
   drv,
   goos,
   goarch,
@@ -23,6 +24,19 @@ drv.overrideAttrs (finalAttrs: previousAttrs: {
     if [[ -d $dir ]]; then
       rmdir $dir
     fi
+  '';
+
+  nativeBuildInputs =
+    previousAttrs.nativeBuildInputs
+    ++ [pkgs.upx];
+
+  # compress binary
+  postInstall = ''
+    FILE=$(find "''${out}" -type f -print -quit)
+    mv "''${FILE}" /tmp/bin
+    rm -rf "''${out}"
+    upx --best --lzma /tmp/bin
+    cat /tmp/bin > "''${out}"
   '';
 
   meta =
