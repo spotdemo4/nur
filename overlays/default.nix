@@ -8,10 +8,17 @@
   };
 
   packages = final: prev: let
-    nur = import ../packages {
+    pkgs = import ../packages {
+      pkgs = prev;
+    };
+  in
+    pkgs;
+
+  libs = final: prev: let
+    libs = import ../libs {
       pkgs = prev;
     };
   in {
-    trev = nur;
+    lib = libs;
   };
 }
