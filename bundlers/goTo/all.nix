@@ -52,8 +52,12 @@ in
         goos,
         goarch,
       }: let
-        capGoos = pkgs.lib.strings.toUpper (builtins.substring 0 1 goos) + builtins.substring 1 (builtins.stringLength goos - 1) goos;
-        capGoarch = pkgs.lib.strings.toUpper (builtins.substring 0 1 goarch) + builtins.substring 1 (builtins.stringLength goarch - 1) goarch;
+        capGoos =
+          pkgs.lib.strings.toUpper (builtins.substring 0 1 goos)
+          + builtins.substring 1 (builtins.stringLength goos - 1) goos;
+        capGoarch =
+          pkgs.lib.strings.toUpper (builtins.substring 0 1 goarch)
+          + builtins.substring 1 (builtins.stringLength goarch - 1) goarch;
       in
         pkgs.lib.attrsets.nameValuePair "goTo${capGoos}${capGoarch}"
         (
