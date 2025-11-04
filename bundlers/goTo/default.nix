@@ -1,67 +1,35 @@
-{pkgs}: let
-  GOOS = [
-    "aix"
-    "android"
-    "darwin"
-    "dragonfly"
-    "freebsd"
-    "hurd"
-    "illumos"
-    "ios"
-    "js"
-    "linux"
-    "nacl"
-    "netbsd"
-    "openbsd"
-    "plan9"
-    "solaris"
-    "windows"
-    "zos"
-  ];
+{
+  drv,
+  goos,
+  goarch,
+}:
+drv.overrideAttrs (finalAttrs: previousAttrs: {
+  pname = "${previousAttrs.pname}-${goos}-${goarch}";
+  env =
+    previousAttrs.env
+    // {
+      GOOS = goos;
+      GOARCH = goarch;
+    };
 
-  GOARCH = [
-    "386"
-    "amd64"
-    "amd64p32"
-    "arm"
-    "arm64"
-    "arm64be"
-    "armbe"
-    "loong64"
-    "mips"
-    "mips64"
-    "mips64le"
-    "mips64p32"
-    "mips64p32le"
-    "mipsle"
-    "ppc"
-    "ppc64"
-    "ppc64le"
-    "riscv"
-    "riscv64"
-    "s390"
-    "s390x"
-    "sparc"
-    "sparc64"
-    "wasm"
-  ];
-in
-  builtins.listToAttrs (
-    pkgs.lib.attrsets.mapCartesianProduct (
-      {
-        goos,
-        goarch,
-      }:
-        pkgs.lib.nameValuePair "goTo-${goos}-${goarch}"
-        (
-          drv:
-            import ./go.nix {
-              inherit drv goos goarch;
-            }
-        )
-    )
-    {
-      goos = GOOS;
-      goarch = GOARCH;
-    }
-  )
+  doCheck = false;
+
+  # normalize cross-compiled builds
+  postBuild = ''
+    dir=$GOPATH/bin/''${GOOS}_''${GOARCH}
+    if [[ -n "$(shopt -s nullglob; echo $dir/*)" ]]; then
+      mv $dir/* $dir/..
+    fi
+    if [[ -d $dir ]]; then
+      rmdir $dir
+    fi
+  '';
+
+  meta =
+    if builtins.hasAttr "meta" previousAttrs
+    then
+      if builtins.hasAttr "mainProgram" previousAttrs.meta && goos == "windows"
+      then previousAttrs.meta // {mainProgram = "${previousAttrs.meta.mainProgram}.exe";}
+      else previousAttrs.meta
+    else {};
+})
