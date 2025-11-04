@@ -8,6 +8,6 @@
       inherit drv pkgs;
     };
 }
-// import ./toGo {
+// (import ./toGo {
   inherit pkgs;
-}
+})
