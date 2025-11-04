@@ -46,22 +46,22 @@
     "wasm"
   ];
 in
-  builtins.listToAttrs
-  pkgs.lib.attrsets.mapCartesianProduct
-  (
+  builtins.listToAttrs (
+    pkgs.lib.attrsets.mapCartesianProduct (
+      {
+        goos,
+        goarch,
+      }:
+        pkgs.lib.nameValuePair "toGo-${goos}-${goarch}"
+        (
+          drv:
+            import ./go.nix {
+              inherit drv goos goarch;
+            }
+        )
+    )
     {
-      goos,
-      goarch,
-    }:
-      pkgs.lib.nameValuePair "toGo-${goos}-${goarch}"
-      (
-        drv:
-          import ./go.nix {
-            inherit drv goos goarch;
-          }
-      )
+      goos = GOOS;
+      goarch = GOARCH;
+    }
   )
-  {
-    goos = GOOS;
-    goarch = GOARCH;
-  }
