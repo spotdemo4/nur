@@ -56,7 +56,7 @@ in
         (
           drv:
             import ./. {
-              inherit drv goos goarch;
+              inherit pkgs drv goos goarch;
             }
         )
     )
