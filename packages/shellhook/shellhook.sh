@@ -236,11 +236,3 @@ for key in "${!pids[@]}"; do
     wait "$value" || true
     pids["${key}"]=$?
 done
-
-if [[ "${pids["git"]}" -eq 0 ]] && [[ "${pids["nix"]}" -eq 0 ]]; then
-    if [[ ! -f ".git/hooks/pre-push" ]]; then
-        info "$git_icon" "creating git pre-push hook"
-        echo "nix flake check --accept-flake-config" > .git/hooks/pre-push
-        chmod +x .git/hooks/pre-push
-    fi
-fi
