@@ -2,7 +2,7 @@
 
 ![check](https://github.com/spotdemo4/nur/actions/workflows/check.yaml/badge.svg)
 ![vulnerable](https://github.com/spotdemo4/nur/actions/workflows/vulnerable.yaml/badge.svg)
-![synced](https://github.com/spotdemo4/nur/actions/workflows/synced.yaml/badge.svg)
+![synced](https://github.com/spotdemo4/nur/actions/workflows/sync.yaml/badge.svg)
 
 ## Packages
 
