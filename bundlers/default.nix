@@ -9,5 +9,5 @@
     };
 }
 // import ./toGo {
-  inherit system pkgs;
+  inherit pkgs;
 }
