@@ -33,10 +33,13 @@ drv.overrideAttrs (finalAttrs: previousAttrs: {
   # compress binary
   postInstall = ''
     FILE=$(find "''${out}" -type f -print -quit)
-    mv "''${FILE}" /tmp/bin
+    TMP_FILE="''${TMPDIR:-/tmp}/bin"
+
+    mv "''${FILE}" "''${TMP_FILE}"
     rm -rf "''${out}"
-    upx --best --lzma /tmp/bin
-    cat /tmp/bin > "''${out}"
+    upx --best --lzma "''${TMP_FILE}"
+
+    cat "''${TMP_FILE}" > "''${out}"
   '';
 
   meta =
