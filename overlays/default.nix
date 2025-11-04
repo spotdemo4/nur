@@ -12,13 +12,13 @@
       pkgs = prev;
     };
   in
-    pkgs;
+    prev // pkgs;
 
   libs = final: prev: let
     libs = import ../libs {
       pkgs = prev;
     };
   in {
-    lib = libs;
+    lib = prev.lib // libs;
   };
 }
