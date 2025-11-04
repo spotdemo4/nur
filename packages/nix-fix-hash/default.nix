@@ -57,7 +57,7 @@ pkgs.stdenv.mkDerivation (finalAttrs: {
     updateScript = lib.concatStringsSep " " (nix-update-script {
       extraArgs = [
         "--commit"
-        "${finalAttrs.pname}"
+        "packages.${finalAttrs.pname}"
       ];
     });
   };
