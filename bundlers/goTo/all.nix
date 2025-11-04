@@ -1,49 +1,49 @@
 {pkgs}: let
   GOOS = [
-    "Aix"
-    "Android"
-    "Darwin"
-    "Dragonfly"
-    "Freebsd"
-    "Hurd"
-    "Illumos"
-    "Ios"
-    "Js"
-    "Linux"
-    "Nacl"
-    "Netbsd"
-    "Openbsd"
-    "Plan9"
-    "Solaris"
-    "Windows"
-    "Zos"
+    "aix"
+    "android"
+    "darwin"
+    "dragonfly"
+    "freebsd"
+    "hurd"
+    "illumos"
+    "ios"
+    "js"
+    "linux"
+    "nacl"
+    "netbsd"
+    "openbsd"
+    "plan9"
+    "solaris"
+    "windows"
+    "zos"
   ];
 
   GOARCH = [
     "386"
-    "Amd64"
-    "Amd64p32"
-    "Arm"
-    "Arm64"
-    "Arm64be"
-    "Armbe"
-    "Loong64"
-    "Mips"
-    "Mips64"
-    "Mips64le"
-    "Mips64p32"
-    "Mips64p32le"
-    "Mipsle"
-    "Ppc"
-    "Ppc64"
-    "Ppc64le"
-    "Riscv"
-    "Riscv64"
-    "S390"
-    "S390x"
-    "Sparc"
-    "Sparc64"
-    "Wasm"
+    "amd64"
+    "amd64p32"
+    "arm"
+    "arm64"
+    "arm64be"
+    "armbe"
+    "loong64"
+    "mips"
+    "mips64"
+    "mips64le"
+    "mips64p32"
+    "mips64p32le"
+    "mipsle"
+    "ppc"
+    "ppc64"
+    "ppc64le"
+    "riscv"
+    "riscv64"
+    "s390"
+    "s390x"
+    "sparc"
+    "sparc64"
+    "wasm"
   ];
 in
   builtins.listToAttrs (
@@ -51,12 +51,15 @@ in
       {
         goos,
         goarch,
-      }:
-        pkgs.lib.attrsets.nameValuePair "goTo${goos}${goarch}"
+      }: let
+        capGoos = pkgs.lib.strings.toUpper (pkgs.lib.strings.substring 0 1 goos) + pkgs.lib.strings.substring 1 (pkgs.lib.strings.length goos - 1) goos;
+        capGoarch = pkgs.lib.strings.toUpper (pkgs.lib.strings.substring 0 1 goarch) + pkgs.lib.strings.substring 1 (pkgs.lib.strings.length goarch - 1) goarch;
+      in
+        pkgs.lib.attrsets.nameValuePair "goTo${capGoos}${capGoarch}"
         (
           drv:
             import ./. {
-              inherit pkgs drv goos goarch;
+              inherit drv goos goarch;
             }
         )
     )

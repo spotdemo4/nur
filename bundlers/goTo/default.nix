@@ -1,5 +1,4 @@
 {
-  pkgs,
   drv,
   goos,
   goarch,
@@ -9,8 +8,8 @@ drv.overrideAttrs (finalAttrs: previousAttrs: {
   env =
     previousAttrs.env
     // {
-      GOOS = pkgs.lib.strings.toLower goos;
-      GOARCH = pkgs.lib.strings.toLower goarch;
+      GOOS = goos;
+      GOARCH = goarch;
     };
 
   doCheck = false;
