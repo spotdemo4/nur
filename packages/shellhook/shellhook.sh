@@ -241,8 +241,10 @@ done
 # add pre-push hook
 if [[ "${pids["git"]}" -eq 0 ]] && [[ "${pids["nix"]}" -eq 0 ]] && [[ -d ".git" ]] && [[ ! -f ".git/hooks/pre-push" ]]; then
     info "$git_icon" "creating git pre-push hook"
-    echo "if git branch --show-current | grep -q 'main'; then" >> .git/hooks/pre-push
-    echo "nix flake check --accept-flake-config" >> .git/hooks/pre-push
-    echo "fi" >> .git/hooks/pre-push
+    {
+        echo "if git branch --show-current | grep -q 'main'; then"
+        echo "nix flake check --accept-flake-config"
+        echo "fi"
+    } >> .git/hooks/pre-push
     chmod +x .git/hooks/pre-push
 fi
