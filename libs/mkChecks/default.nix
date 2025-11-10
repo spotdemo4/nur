@@ -4,8 +4,9 @@ in
   builtins.mapAttrs (name: check:
     if isDerivation check.src
     then
-      check.src.overrideAttrs {
+      check.src.overrideAttrs (final: prev: {
         name = name;
+        nativeBuildInputs = prev.nativeBuildInputs ++ (check.deps or check.nativeBuildInputs or []);
 
         dontBuild = true;
 
@@ -20,7 +21,7 @@ in
         '';
 
         dontFixup = true;
-      }
+      })
     else
       pkgs.stdenvNoCC.mkDerivation {
         name = name;
