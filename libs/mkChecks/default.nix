@@ -15,6 +15,7 @@ builtins.mapAttrs (
         doCheck = true;
         checkPhase = pkgs.lib.strings.concatLines [
           "export HOME=$(mktemp -d)"
+          "export TREEFMT_TREE_ROOT=$(pwd)"
           check.script or check.checkPhase
         ];
 
@@ -37,6 +38,7 @@ builtins.mapAttrs (
       doCheck = true;
       checkPhase = pkgs.lib.strings.concatLines [
         "export HOME=$(mktemp -d)"
+        "export TREEFMT_TREE_ROOT=$(pwd)"
         check.script or check.checkPhase
       ];
 

@@ -109,7 +109,7 @@
               trenovate
             ];
             script = ''
-              treefmt --ci --tree-root .
+              treefmt --ci
               prettier --check .
               action-validator .github/**/*.yaml
               renovate-config-validator .github/renovate.json
