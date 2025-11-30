@@ -12,3 +12,6 @@
 // import ./goTo/all.nix {
   inherit pkgs;
 }
+// import ./nodeTo/all.nix {
+  inherit pkgs;
+}
