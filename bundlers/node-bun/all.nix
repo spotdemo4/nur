@@ -14,7 +14,7 @@ in
 builtins.listToAttrs (
   builtins.map (
     target:
-    pkgs.lib.attrsets.nameValuePair "nodeTo${target}" (
+    pkgs.lib.attrsets.nameValuePair "node-${target}" (
       drv:
       import ./. {
         inherit
