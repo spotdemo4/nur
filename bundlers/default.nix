@@ -19,5 +19,5 @@
   inherit pkgs;
 }
 // import ./docker/all.nix {
-  inherit pkgs;
+  inherit system pkgs;
 }
