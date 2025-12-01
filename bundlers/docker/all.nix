@@ -1,4 +1,8 @@
-{ system, pkgs }:
+{
+  system,
+  pkgs,
+  nixpkgs,
+}:
 let
   # from https://docs.deno.com/runtime/reference/cli/compile/#supported-targets
   targets = [
@@ -30,7 +34,7 @@ builtins.listToAttrs (
           "${drv.pname}" = drv;
         };
 
-        crossPkgs = import <nixpkgs> {
+        crossPkgs = import nixpkgs {
           buildPlatform = system;
           hostPlatform = target.normalized;
           overlays = [
