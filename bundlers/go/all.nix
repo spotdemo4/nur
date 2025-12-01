@@ -35,7 +35,7 @@ builtins.listToAttrs (
     pkgs.lib.attrsets.nameValuePair "go-${target.normalized}" (
       drv:
       import ./. {
-        inherit pkgs drv;
+        inherit drv;
         goos = target.goos;
         goarch = target.goarch;
         normalized = target.normalized;
