@@ -12,15 +12,15 @@ drv.overrideAttrs (
     denort = {
       x86_64-pc-windows-msvc = pkgs.fetchurl {
         url = "https://dl.deno.land/release/v2.5.6/denort-x86_64-pc-windows-msvc.zip";
-        hash = "";
+        hash = "sha256-RK6GAwiRTuVXRfRBfkzllT8LlBAQeXP+yOhwsKBtKak=";
       };
       x86_64-apple-darwin = pkgs.fetchurl {
         url = "https://dl.deno.land/release/v2.5.6/denort-x86_64-apple-darwin.zip";
-        hash = "";
+        hash = "sha256-dna2dri9QSDTxsRZDGs2EI86iNuI+TE2Oy3fePmpyCs=";
       };
       aarch64-apple-darwin = pkgs.fetchurl {
         url = "https://dl.deno.land/release/v2.5.6/denort-aarch64-apple-darwin.zip";
-        hash = "";
+        hash = "sha256-K4HfRWSZWkG7IDEVHOUKa4kqjwTlCJ9hFXD2mTmG3lg=";
       };
       x86_64-unknown-linux-gnu = pkgs.fetchurl {
         url = "https://dl.deno.land/release/v2.5.6/denort-x86_64-unknown-linux-gnu.zip";
@@ -28,7 +28,7 @@ drv.overrideAttrs (
       };
       aarch64-unknown-linux-gnu = pkgs.fetchurl {
         url = "https://dl.deno.land/release/v2.5.6/denort-aarch64-unknown-linux-gnu.zip";
-        hash = "";
+        hash = "sha256-rE6bKb2IzA18cSLzvvrWC5u2V2LvLuBq9DeqrTUFDwo=";
       };
     };
   in
