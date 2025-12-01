@@ -41,7 +41,6 @@ drv.overrideAttrs (
     nativeBuildInputs =
       with pkgs;
       [
-        autoPatchelfHook
         deno
         jq
         upx
