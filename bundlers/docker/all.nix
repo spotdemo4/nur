@@ -26,7 +26,8 @@ builtins.listToAttrs (
     pkgs.lib.attrsets.nameValuePair "docker-${target.normalized}" (
       drv:
       pkgs.pkgsCross."${target.name}".callPackage ./default.nix {
-        inherit drv pkgs;
+        inherit drv;
+        pkgs = pkgs.pkgsCross."${target.name}";
       }
     )
   ) targets
