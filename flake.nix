@@ -1,5 +1,5 @@
 {
-  description = "trev's nix user repository";
+  description = "trev's nix repository";
 
   nixConfig = {
     extra-substituters = [
@@ -124,6 +124,8 @@
             };
           }
           // packages;
+
+        formatter = pkgs.nixfmt-tree;
       }
     );
 }
