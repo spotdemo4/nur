@@ -1,6 +1,6 @@
 {
   default =
-    final: prev:
+    _: prev:
     let
       nur = import ../. {
         pkgs = prev;
@@ -11,7 +11,7 @@
     };
 
   packages =
-    final: prev:
+    _: prev:
     let
       pkgs = import ../packages {
         pkgs = prev;
@@ -20,7 +20,7 @@
     prev // pkgs;
 
   libs =
-    final: prev:
+    _: prev:
     let
       libs = import ../libs {
         pkgs = prev;
@@ -28,5 +28,16 @@
     in
     {
       lib = prev.lib // libs;
+    };
+
+  images =
+    _: prev:
+    let
+      images = import ../images {
+        pkgs = prev;
+      };
+    in
+    {
+      image = images;
     };
 }
