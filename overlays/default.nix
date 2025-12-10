@@ -3,6 +3,7 @@
     _: prev:
     let
       nur = import ../. {
+        system = prev.stdenv.hostPlatform.system;
         pkgs = prev;
       };
     in
@@ -14,6 +15,7 @@
     _: prev:
     let
       pkgs = import ../packages {
+        system = prev.stdenv.hostPlatform.system;
         pkgs = prev;
       };
     in
@@ -23,6 +25,7 @@
     _: prev:
     let
       libs = import ../libs {
+        system = prev.stdenv.hostPlatform.system;
         pkgs = prev;
       };
     in
@@ -34,6 +37,7 @@
     _: prev:
     let
       images = import ../images {
+        system = prev.stdenv.hostPlatform.system;
         pkgs = prev;
       };
     in
