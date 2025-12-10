@@ -54,7 +54,16 @@ jobs:
           shell: update
 
       - name: Renovate
+        if: ${{ runner.debug != "1" }}
         env:
           RENOVATE_CONFIG_FILE: .github/renovate.json
           RENOVATE_TOKEN: ${{ steps.init.outputs.token }}
+        run: renovate
+
+      - name: Renovate (debug)
+        if: ${{ runner.debug == "1" }}
+        env:
+          RENOVATE_CONFIG_FILE: .github/renovate.json
+          RENOVATE_TOKEN: ${{ steps.init.outputs.token }}
+          LOG_LEVEL: debug
         run: renovate
