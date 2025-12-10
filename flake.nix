@@ -66,8 +66,8 @@
           default = pkgs.mkShell {
             packages =
               let
-                nix-fix-hash = pkgs.callPackage ./packages/nix-fix-hash { };
-                update = pkgs.callPackage ./utils/update { };
+                nix-fix-hash = pkgs.callPackage ./packages/nix-fix-hash { inherit system; };
+                update = pkgs.callPackage ./utils/update { inherit system; };
               in
               with pkgs;
               [
@@ -92,9 +92,9 @@
           update = pkgs.mkShell {
             packages =
               let
-                nix-fix-hash = pkgs.callPackage ./packages/nix-fix-hash { };
+                nix-fix-hash = pkgs.callPackage ./packages/nix-fix-hash { inherit system; };
                 trenovate = pkgs.callPackage ./packages/renovate { };
-                update = pkgs.callPackage ./utils/update { };
+                update = pkgs.callPackage ./utils/update { inherit system; };
               in
               [
                 nix-fix-hash
