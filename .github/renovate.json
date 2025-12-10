@@ -30,6 +30,17 @@
       "autoReplaceStringTemplate": "image = \"{{{depName}}}:{{{newValue}}}{{#if newDigest}}@{{{newDigest}}}{{/if}}\"",
       "depTypeTemplate": "image",
       "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "flakes",
+      "managerFilePatterns": ["/^packages/.*.nix$/"],
+      "matchStrings": [
+        "builtins\\.getFlake \"github:(?<depName>.+/.+)/(?<currentDigest>.+)\" # (?<currentValue>.+)"
+      ],
+      "autoReplaceStringTemplate": "builtins\\.getFlake \"github:{{{depName}}}/{{{newDigest}}}\" # {{{newValue}}}",
+      "depTypeTemplate": "flake",
+      "datasourceTemplate": "github-tags"
     }
   ],
   "packageRules": [
@@ -53,6 +64,12 @@
       "postUpgradeTasks": {
         "commands": ["nix-fix-hash --file utils/images"]
       }
+    },
+    {
+      "groupName": "flakes",
+      "matchManagers": ["custom.regex"],
+      "matchDepTypes": ["flake"],
+      "pinDigests": true
     }
   ]
 }
