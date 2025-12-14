@@ -1,4 +1,5 @@
 {
+  fetchFromGitHub,
   jq,
   lib,
   makeWrapper,
@@ -13,9 +14,11 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "nix-scan";
   version = "1.1.1";
 
-  src = builtins.path {
-    name = "root";
-    path = ./.;
+  src = fetchFromGitHub {
+    owner = "spotdemo4";
+    repo = "nix-scan";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-Xyy0gUaf7WIY7QsT38zfksGf9oYf4f3glIEJSxaJqpk=";
   };
 
   nativeBuildInputs = [
