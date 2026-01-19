@@ -14,6 +14,7 @@
   shellcheck,
   skopeo,
   stdenv,
+  tea,
   xz,
   zip,
 }:
@@ -43,6 +44,7 @@ stdenv.mkDerivation (finalAttrs: {
     ncurses
     nix
     skopeo
+    tea
     xz
     zip
   ];
