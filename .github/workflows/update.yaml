@@ -5,6 +5,9 @@ on:
     - cron: "0 9 * * *" # every day at 09:00 UTC
   workflow_dispatch:
 
+concurrency:
+  group: update
+
 permissions:
   contents: read
 
@@ -12,9 +15,8 @@ jobs:
   pkgs-amd64-linux:
     runs-on: ubuntu-24.04
     steps:
-      - id: init
-        name: Initialize
-        uses: spotdemo4/nix-init@ed84640dc773603827ade8ecfd81c535733130ac # v1.21.4
+      - name: Initialize
+        uses: spotdemo4/nix-init@842337cdd1a41ced81cb88edfd632589ee53ad2d # v1.22.0
         with:
           attic_cache: nur
           attic_token: ${{ secrets.ATTIC_TOKEN }}
@@ -29,15 +31,14 @@ jobs:
         run: update
 
       - name: Push changes
-        run: git push --set-upstream origin "update-packages"
+        run: git push "update-packages"
 
   pkgs-arm64-linux:
     needs: pkgs-amd64-linux
     runs-on: ubuntu-24.04-arm
     steps:
-      - id: init
-        name: Initialize
-        uses: spotdemo4/nix-init@ed84640dc773603827ade8ecfd81c535733130ac # v1.21.4
+      - name: Initialize
+        uses: spotdemo4/nix-init@842337cdd1a41ced81cb88edfd632589ee53ad2d # v1.22.0
         with:
           attic_cache: nur
           attic_token: ${{ secrets.ATTIC_TOKEN }}
@@ -50,15 +51,14 @@ jobs:
         run: update
 
       - name: Push changes
-        run: git push --set-upstream origin "update-packages"
+        run: git push "update-packages"
 
   pkgs-arm64-darwin:
     needs: pkgs-arm64-linux
     runs-on: macos-26
     steps:
-      - id: init
-        name: Initialize
-        uses: spotdemo4/nix-init@ed84640dc773603827ade8ecfd81c535733130ac # v1.21.4
+      - name: Initialize
+        uses: spotdemo4/nix-init@842337cdd1a41ced81cb88edfd632589ee53ad2d # v1.22.0
         with:
           attic_cache: nur
           attic_token: ${{ secrets.ATTIC_TOKEN }}
@@ -71,7 +71,7 @@ jobs:
         run: update
 
       - name: Push changes
-        run: git push --set-upstream origin "update-packages"
+        run: git push "update-packages"
 
   pkgs-pr:
     needs: pkgs-arm64-darwin
@@ -109,7 +109,7 @@ jobs:
     steps:
       - id: init
         name: Initialize
-        uses: spotdemo4/nix-init@ed84640dc773603827ade8ecfd81c535733130ac # v1.21.4
+        uses: spotdemo4/nix-init@842337cdd1a41ced81cb88edfd632589ee53ad2d # v1.22.0
         with:
           attic_cache: nur
           attic_token: ${{ secrets.ATTIC_TOKEN }}
