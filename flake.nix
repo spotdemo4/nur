@@ -123,10 +123,7 @@
             actions = {
               src = fs.toSource {
                 root = ./.;
-                fileset = fs.unions [
-                  ./action.yaml
-                  ./.github/workflows
-                ];
+                fileset = ./.github/workflows;
               };
               deps = with pkgs; [
                 action-validator
