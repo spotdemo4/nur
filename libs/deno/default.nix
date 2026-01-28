@@ -36,7 +36,7 @@
           };
           aarch64-unknown-linux-gnu = pkgs.fetchurl {
             url = "https://dl.deno.land/release/v2.6.5/denort-aarch64-unknown-linux-gnu.zip";
-            hash = "sha256-rE6bKb2IzA18cSLzvvrWC5u2V2LvLuBq9DeqrTUFDwo=";
+            hash = "sha256-3P3kevpkxpnwpTKBQODfycanHKSb1LeNPjEux6A/dHc=";
           };
         };
       in
