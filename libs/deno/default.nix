@@ -14,7 +14,7 @@
     pkg.overrideAttrs (
       _: prev:
       let
-        name = if builtins.hasAttr "pname" then prev.pname else prev.name;
+        name = if builtins.hasAttr "pname" prev then prev.pname else prev.name;
         binName = if target == "x86_64-pc-windows-msvc" then "${name}.exe" else name;
 
         denort = {
