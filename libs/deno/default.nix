@@ -49,7 +49,7 @@
             deno
             jq
           ]
-          ++ previousAttrs.nativeBuildInputs;
+          ++ prev.nativeBuildInputs;
 
         # compile to binary with deno
         installPhase = ''
