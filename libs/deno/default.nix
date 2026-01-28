@@ -14,7 +14,8 @@
     pkg.overrideAttrs (
       _: prev:
       let
-        binName = if target == "x86_64-pc-windows-msvc" then "${prev.name}.exe" else prev.name;
+        name = if builtins.hasAttr "pname" then prev.pname else prev.name;
+        binName = if target == "x86_64-pc-windows-msvc" then "${name}.exe" else name;
 
         denort = {
           x86_64-pc-windows-msvc = pkgs.fetchurl {
