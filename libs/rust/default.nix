@@ -16,13 +16,10 @@
         bin = if platform.isWindows then "${name}.exe" else name;
       in
       {
-        nativeBuildInputs =
-          with pkgs;
-          [
-            cargo-zigbuild
-            jq
-          ]
-          ++ final.nativeBuildInputs;
+        nativeBuildInputs = (final.nativeBuildInputs or [ ]) ++ [
+          pkgs.cargo-zigbuild
+          pkgs.jq
+        ];
 
         # fix for https://github.com/rust-cross/cargo-zigbuild/issues/162
         auditable = false;
