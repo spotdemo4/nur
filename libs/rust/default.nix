@@ -7,7 +7,7 @@
       ...
     }:
     package.overrideAttrs (
-      _: prev:
+      final: prev:
       let
         platform = pkgs.lib.systems.elaborate {
           config = target;
@@ -22,7 +22,7 @@
             cargo-zigbuild
             jq
           ]
-          ++ prev.nativeBuildInputs;
+          ++ final.nativeBuildInputs;
 
         # fix for https://github.com/rust-cross/cargo-zigbuild/issues/162
         auditable = false;
