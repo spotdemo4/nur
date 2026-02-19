@@ -22,7 +22,7 @@ let
     };
     aarch64-darwin = fetchurl {
       url = "https://github.com/opengrep/opengrep/releases/download/v${version}/opengrep-core_osx_aarch64.tar.gz";
-      hash = "sha256-s9b/hjRJAUhEOR7muHQGg1JHh9pasHl/mPqjJxTlWOk=";
+      hash = "sha256-ey6miiuBuaeOkpEkKbKk3bHywiMTh7LZE4W7NBB9NT4=";
     };
   };
 
