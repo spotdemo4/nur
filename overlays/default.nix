@@ -1,10 +1,10 @@
 {
   default =
-    _: pkgs:
+    _: prev:
     let
       nur = import ../. {
-        system = pkgs.stdenv.hostPlatform.system;
-        pkgs = pkgs;
+        system = prev.stdenv.hostPlatform.system;
+        pkgs = prev;
       };
     in
     {
@@ -12,44 +12,44 @@
     };
 
   packages =
-    _: pkgs:
+    _: prev:
     let
       packages = import ../packages {
-        system = pkgs.stdenv.hostPlatform.system;
-        pkgs = pkgs;
+        system = prev.stdenv.hostPlatform.system;
+        pkgs = prev;
       };
     in
-    pkgs // packages;
+    prev // packages;
+
+  pythonPackages = _: prev: {
+    pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+      (py-final: _: {
+        uv-build = py-final.callPackage ../packages/uv-build { };
+      })
+    ];
+  };
 
   libs =
-    _: pkgs:
+    _: prev:
     let
       libs = import ../libs {
-        system = pkgs.stdenv.hostPlatform.system;
-        pkgs = pkgs;
+        system = prev.stdenv.hostPlatform.system;
+        pkgs = prev;
       };
     in
     {
-      lib = pkgs.lib // libs;
+      lib = prev.lib // libs;
     };
 
   images =
-    _: pkgs:
+    _: prev:
     let
       images = import ../images {
-        system = pkgs.stdenv.hostPlatform.system;
-        pkgs = pkgs;
+        system = prev.stdenv.hostPlatform.system;
+        pkgs = prev;
       };
     in
     {
       image = images;
     };
-
-  inherit (import ./python.nix)
-    python311Packages
-    python312Packages
-    python313Packages
-    python314Packages
-    python315Packages
-    ;
 }
