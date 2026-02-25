@@ -73,25 +73,15 @@
 
         devShells = {
           default = pkgs.mkShell {
-            packages =
-              let
-                nix-fix-hash = pkgs.callPackage ./packages/nix-fix-hash { };
-                fetch-hash = pkgs.callPackage ./packages/fetch-hash { };
-              in
-              with pkgs;
-              [
-                nix-fix-hash
-                fetch-hash
-                nixfmt
-                prettier
-                nix-update
-                gh
-              ];
-            shellHook =
-              let
-                shellhook = pkgs.callPackage ./packages/shellhook { };
-              in
-              shellhook.ref;
+            packages = with pkgs; [
+              (pkgs.callPackage ./packages/nix-fix-hash { })
+              (pkgs.callPackage ./packages/fetch-hash { })
+              nixfmt
+              prettier
+              nix-update
+              gh
+            ];
+            shellHook = (pkgs.callPackage ./packages/shellhook { }).ref;
           };
 
           check = pkgs.mkShell {
@@ -101,17 +91,11 @@
           };
 
           update = pkgs.mkShell {
-            packages =
-              let
-                nix-fix-hash = pkgs.callPackage ./packages/nix-fix-hash { };
-                trenovate = pkgs.callPackage ./packages/renovate { };
-              in
-              with pkgs;
-              [
-                nix-fix-hash
-                trenovate
-                nix-update
-              ];
+            packages = with pkgs; [
+              (pkgs.callPackage ./packages/nix-fix-hash { })
+              (pkgs.callPackage ./packages/renovate { })
+              nix-update
+            ];
           };
 
           vulnerable = pkgs.mkShell {
@@ -147,13 +131,9 @@
                 root = ./.github;
                 fileset = ./.github/renovate.json;
               };
-              deps =
-                let
-                  trenovate = pkgs.callPackage ./packages/renovate { };
-                in
-                [
-                  trenovate
-                ];
+              deps = [
+                (pkgs.callPackage ./packages/renovate { })
+              ];
               script = ''
                 renovate-config-validator renovate.json
               '';
@@ -169,6 +149,19 @@
               ];
               script = ''
                 treefmt --ci
+              '';
+            };
+
+            shell = {
+              src = fs.toSource {
+                root = ./.;
+                fileset = fs.fileFilter (file: file.hasExt "sh") ./.;
+              };
+              deps = with pkgs; [
+                shellcheck
+              ];
+              script = ''
+                shellcheck **/*.sh
               '';
             };
 
