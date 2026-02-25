@@ -22,7 +22,7 @@ for index in "${!packages[@]}"; do
         continue
     fi
 
-    commits=$(git log '@{u}..HEAD')
+    commits=$(git log 'main..HEAD')
     if [[ -z "${commits}" ]]; then
         echo "no update needed for ${package}"
         echo "::endgroup::"
