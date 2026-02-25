@@ -74,12 +74,18 @@
         devShells = {
           default = pkgs.mkShell {
             packages = with pkgs; [
-              (pkgs.callPackage ./packages/nix-fix-hash { })
-              (pkgs.callPackage ./packages/fetch-hash { })
+              # lint
+              shellcheck
+
+              # format
               nixfmt
               prettier
+
+              # util
               nix-update
               gh
+              (pkgs.callPackage ./packages/nix-fix-hash { })
+              (pkgs.callPackage ./packages/fetch-hash { })
             ];
             shellHook = (pkgs.callPackage ./packages/shellhook { }).ref;
           };
@@ -161,7 +167,7 @@
                 shellcheck
               ];
               script = ''
-                shellcheck **/*.sh
+                find -type f -name '*.sh' -exec shellcheck {} +
               '';
             };
 
