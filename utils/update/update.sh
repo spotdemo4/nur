@@ -30,5 +30,7 @@ for index in "${!packages[@]}"; do
     fi
 
     git push --force origin "update/${system}/${package}"
+    git checkout main
+    
     echo "::endgroup::"
 done
