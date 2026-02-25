@@ -106,9 +106,11 @@
                 nix-fix-hash = pkgs.callPackage ./packages/nix-fix-hash { };
                 trenovate = pkgs.callPackage ./packages/renovate { };
               in
+              with pkgs;
               [
                 nix-fix-hash
                 trenovate
+                nix-update
               ];
           };
 
