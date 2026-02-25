@@ -62,6 +62,7 @@ for package in "${!updates[@]}"; do
     echo "Merging pr"
     gh pr merge "${pr}" \
         --auto \
+        --delete-branch \
         --squash \
         --subject "chore(deps): update ${package} to v${version}" \
         --body "${body}"
