@@ -32,7 +32,8 @@ buildPythonApplication rec {
   ];
 
   postPatch = ''
-    sed -ie 's/requires = \["uv_build[^"]*"]/requires = ["uv_build"]/' pyproject.toml
+    sed -i 's/requires = \["uv_build[^"]*"]/requires = ["uv_build"]/' pyproject.toml
+    sed -i '/license-files = ["LICENSE.md"]/d' pyproject.toml
   '';
 
   passthru.updateScript = nix-update-script {
