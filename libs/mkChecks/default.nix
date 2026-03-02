@@ -10,9 +10,9 @@ builtins.mapAttrs (
         "export HOME=$(mktemp -d)"
         "export TREEFMT_TREE_ROOT=$(pwd)"
       ]
-      ++ pkgs.lib.optionalString (check ? checkPhase) check.checkPhase
-      ++ pkgs.lib.optionalString (check ? script) check.script
-      ++ pkgs.lib.optionalString (check ? forEach) ''
+      ++ pkgs.lib.optional (check ? checkPhase) check.checkPhase
+      ++ pkgs.lib.optional (check ? script) check.script
+      ++ pkgs.lib.optional (check ? forEach) ''
         shopt -s globstar
         for f in ./**; do
           if [[ -f "$f" ]]; then
