@@ -22,8 +22,8 @@ builtins.mapAttrs (
 
         for file in ./**; do
           if [[ -f "$file" ]]; then
-            echo "Checking $file"
-            for_each "$file"
+            echo "Checking $(basename "$file")"
+            for_each "$(realpath "$file")"
           fi
         done
 
