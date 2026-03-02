@@ -5,8 +5,8 @@ in
 builtins.mapAttrs (
   name: check:
   let
-    checkPhase =
-      pkgs.lib.strings.concatLines [
+    checkPhase = pkgs.lib.strings.concatLines (
+      [
         "export HOME=$(mktemp -d)"
         "export TREEFMT_TREE_ROOT=$(pwd)"
       ]
@@ -20,7 +20,8 @@ builtins.mapAttrs (
           fi
         done
         shopt -u globstar
-      '';
+      ''
+    );
   in
   if isDerivation check.src then
     check.src.overrideAttrs (
