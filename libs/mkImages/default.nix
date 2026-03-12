@@ -13,7 +13,7 @@ let
     image.overrideAttrs (
       _: prev:
       let
-        pkg = prev.pkg or null;
+        pkg = builtins.elemAt prev.contents 0;
       in
       {
         contents = (prev.contents or [ ]) ++ [
