@@ -23,7 +23,7 @@ let
         architecture = prev.architecture or arch;
 
         config = (prev.config or { }) // {
-          Cmd = [ "${prev.config.Cmd or (if pkg != null then pkgs.lib.meta.getExe pkg else null)}" ];
+          Cmd = [ "${prev.config.Cmd or (if pkg != null then (pkgs.lib.meta.getExe pkg) else null)}" ];
           Labels =
             (prev.config.Labels or { })
             // pkgs.lib.filterAttrs (_: v: v != null) {
