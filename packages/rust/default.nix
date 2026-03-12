@@ -1,8 +1,10 @@
 {
   rust,
   callPackage,
+  lib,
 }:
 
-rust.override {
-  compile = callPackage ./compile.nix { };
+rust
+// lib.filterAttrs (_: v: v != null) {
+  compile = if rust ? compile then null else callPackage ./compile.nix { };
 }
