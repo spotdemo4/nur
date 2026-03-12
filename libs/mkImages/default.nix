@@ -11,7 +11,7 @@ let
   setupImage =
     image: arch:
     image.override (
-      _: prev:
+      prev:
       let
         pkg = builtins.elemAt prev.contents 0;
       in
@@ -39,7 +39,7 @@ let
 in
 builtins.mapAttrs (
   name: image:
-  (setupImage image pkgs.go.GOARCH).override (
+  (setupImage image pkgs.go.GOARCH).overrideAttrs (
     _: prev: {
       passthru = (prev.passthru or { }) // {
         x86_64-linux = x86_64-linux-pkgs.${name} "amd64";
