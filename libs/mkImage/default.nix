@@ -2,7 +2,7 @@
 { pkg, ... }@args:
 
 (pkgs.dockerTools.buildLayeredImage (
-  args
+  (removeAttrs args [ "pkg" ])
   // {
     name = args.name or pkg.pname;
     tag = args.tag or pkg.version;
