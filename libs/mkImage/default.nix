@@ -1,8 +1,8 @@
 { pkgs }:
 { pkg, ... }@args:
 
-(
-  pkgs.dockerTools.buildLayeredImage args
+(pkgs.dockerTools.buildLayeredImage (
+  args
   // {
     name = args.name or pkg.pname;
     tag = args.tag or pkg.version;
@@ -22,7 +22,7 @@
         };
     };
   }
-).overrideAttrs
+)).overrideAttrs
   (
     _: prev: {
       passthru = (prev.passthru or { }) // {
