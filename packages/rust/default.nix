@@ -3,7 +3,6 @@
   callPackage,
 }:
 
-rust
-// {
+rust.override {
   compile = callPackage ./compile.nix { };
 }
