@@ -5,12 +5,12 @@
 }:
 func:
 let
-  try =
-    e:
-    let
-      res = builtins.tryEval e;
-    in
-    if res.success then res.value else null;
+  # try =
+  #   e:
+  #   let
+  #     res = builtins.tryEval e;
+  #   in
+  #   if res.success then res.value else null;
 
   mkImage = _: prev: {
     mkImage = import ./mkImage.nix {
@@ -63,7 +63,7 @@ builtins.mapAttrs (
     pkg = image.pkg or null;
     hasPlatform =
       platform: pkgsTarget:
-      if builtins.hasAttr "${platform}" pkg then try ((func pkgsTarget).${name}) else null;
+      if builtins.hasAttr "${platform}" pkg then (func pkgsTarget).${name} else null;
   in
   if pkg == null then
     image
