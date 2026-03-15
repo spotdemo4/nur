@@ -47,7 +47,8 @@ builtins.mapAttrs (
   let
     pkg = image.pkg or null;
     hasPlatform =
-      platform: pkgsTarget: if pkg ? platform then try ((func pkgsTarget).${name}) else null;
+      platform: pkgsTarget:
+      if builtins.hasAttr "${platform}" pkg then try ((func pkgsTarget).${name}) else null;
   in
   if pkg == null then
     image
