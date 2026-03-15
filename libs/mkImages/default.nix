@@ -13,7 +13,7 @@ let
     if res.success then res.value else null;
 
   mkImage = _: prev: {
-    mkImage = import ./mkImage {
+    mkImage = import ./mkImage.nix {
       inherit system;
       pkgs = prev;
     };
