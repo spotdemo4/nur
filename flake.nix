@@ -28,6 +28,7 @@
         system:
         import nixpkgs {
           inherit system;
+          config.allowUnfree = true;
         }
       );
 
@@ -189,8 +190,12 @@
             '';
           };
         }
-        // pkgs.lib.mapAttrs' (name: value: pkgs.lib.nameValuePair ("package_" + name) value) self.packages
-        // pkgs.lib.mapAttrs' (name: value: pkgs.lib.nameValuePair ("image_" + name) value) self.images
+        // pkgs.lib.mapAttrs' (
+          name: value: pkgs.lib.nameValuePair ("package_" + name) value
+        ) self.packages."${system}"
+        //
+          pkgs.lib.mapAttrs' (name: value: pkgs.lib.nameValuePair ("image_" + name) value)
+            self.images."${system}"
       );
 
       formatter = forEachSystem (system: pkgs: pkgs.nixfmt-tree);
