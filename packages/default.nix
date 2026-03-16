@@ -25,7 +25,6 @@ rec {
   pysentry = pkgs.callPackage ./pysentry { };
   qsvenc = pkgs.callPackage ./qsvenc { };
   renovate = pkgs.callPackage ./renovate { };
-  rust = pkgs.callPackage ./rust { inherit (pkgs) rust; };
   shellhook = pkgs.callPackage ./shellhook { };
   uv-build = pkgs.python3Packages.callPackage ./uv-build { };
   yt-dlp = pkgs.python3Packages.callPackage ./yt-dlp { inherit yt-dlp-ejs; };
