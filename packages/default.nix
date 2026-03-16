@@ -16,6 +16,7 @@ rec {
   gleescript = pkgs.callPackage ./gleescript { inherit gleam; };
   go = pkgs.callPackage ./go { inherit (pkgs) go_latest; };
   go-over = pkgs.callPackage ./go-over { inherit gleam; };
+  igsc = pkgs.callPackage ./igsc { };
   nix-fix-hash = pkgs.callPackage ./nix-fix-hash { };
   nix-scan = pkgs.callPackage ./nix-scan { };
   nvtop-exporter = pkgs.python3Packages.callPackage ./nvtop-exporter { };
