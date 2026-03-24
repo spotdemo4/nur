@@ -28,7 +28,7 @@ rec {
   renovate = pkgs.callPackage ./renovate { };
   shellhook = pkgs.callPackage ./shellhook { };
   synchronicity = pkgs.python3Packages.callPackage ./synchronicity { };
-  uv-build = pkgs.python3Packages.callPackage ./uv-build { };
+  uv-build = pkgs.python3Packages.callPackage ./uv-build { inherit (pkgs) uv-build; };
   yt-dlp = pkgs.python3Packages.callPackage ./yt-dlp { inherit yt-dlp-ejs; };
   yt-dlp-ejs = pkgs.python3Packages.callPackage ./yt-dlp/ejs.nix { };
   zig-protobuf = pkgs.callPackage ./zig-protobuf { };
