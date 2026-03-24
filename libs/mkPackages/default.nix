@@ -53,7 +53,6 @@ let
   pkgs-x86_64-windows = mkCrossPkgs {
     config = "x86_64-w64-mingw32";
     libc = "ucrt";
-    isStatic = true;
   };
   pkgs-x86_64-darwin = mkCrossPkgs {
     config = "x86_64-apple-darwin";
