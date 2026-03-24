@@ -58,13 +58,11 @@ let
     config = "x86_64-apple-darwin";
     xcodePlatform = "MacOSX";
     platform = { };
-    isStatic = true;
   };
   pkgs-aarch64-darwin = mkCrossPkgs {
     config = "arm64-apple-darwin";
     xcodePlatform = "MacOSX";
     platform = { };
-    isStatic = true;
   };
 
   # tries to create the cross-compiled package
