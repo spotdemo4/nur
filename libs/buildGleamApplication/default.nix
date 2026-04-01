@@ -155,13 +155,13 @@ lib.extendMkDerivation {
     # When the build target is erlang
     // lib.optionalAttrs (buildTarget == "erlang") {
       nativeBuildInputs =
-        defaultNativeBuildInputs
+        nativeBuildInputs
+        ++ defaultNativeBuildInputs
         ++ [
           erlangPackage
           rebar3Package
         ]
-        ++ (lib.optional needsElixir [ elixir ])
-        ++ nativeBuildInputs;
+        ++ (lib.optional needsElixir [ elixir ]);
 
       # The gleam compiler has a nice export function for erlang shipment.
       buildPhase =
@@ -201,7 +201,7 @@ lib.extendMkDerivation {
 
     # When the build target is javascript
     // lib.optionalAttrs (buildTarget == "javascript") {
-      nativeBuildInputs = defaultNativeBuildInputs ++ nativeBuildInputs;
+      nativeBuildInputs = nativeBuildInputs ++ defaultNativeBuildInputs;
 
       # The gleam compiler doesn't provide an export mechanism for javascript target.
       buildPhase =
