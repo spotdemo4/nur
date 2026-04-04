@@ -33,7 +33,7 @@
 }:
 let
   pname = "opengrep";
-  version = "1.16.5";
+  version = "1.17.0";
 
   binaries = {
     aarch64-linux = fetchurl {
@@ -46,7 +46,7 @@ let
     };
     aarch64-darwin = fetchurl {
       url = "https://github.com/opengrep/opengrep/releases/download/v${version}/opengrep-core_osx_aarch64.tar.gz";
-      hash = "sha256-gG8hd8+KH6LCo/sQ6wb78o77VRiAbTsqgTa/OGi1sYY=";
+      hash = "sha256-5/iNSRk5nOgI5DVT8j1WQKNhSmHr5LcAWcdfW03vlII=";
     };
   };
 
@@ -77,7 +77,7 @@ buildPythonApplication {
     owner = "opengrep";
     repo = "opengrep";
     tag = "v${version}";
-    hash = "sha256-IPrtZwio5/nf/TUrs5hraI0gRjFKmOf+Pd78bgV+5Lc=";
+    hash = "sha256-aGNklWgLsaNruuvGCEMZtp7uzRUL+FqwJm0czcGlx9c=";
     fetchSubmodules = true;
   };
 
