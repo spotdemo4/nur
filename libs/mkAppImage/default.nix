@@ -3,6 +3,7 @@
   runCommand,
   squashfsTools,
   callPackage,
+  pkgsStatic,
 }:
 
 # actual arguments
@@ -18,7 +19,7 @@
 }:
 
 let
-  runtime = callPackage ./runtime { };
+  runtime = pkgsStatic.callPackage ./runtime { };
   apprun = callPackage ./apprun { };
 
   commonArgs = [
