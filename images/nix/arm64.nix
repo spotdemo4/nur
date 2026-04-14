@@ -9,7 +9,7 @@ in
   finalImageName = builtins.elemAt parts 1;
   finalImageTag = builtins.elemAt parts 2;
   imageDigest = builtins.elemAt parts 3;
-  hash = "sha256-tLUjvKT1juovN6lf1mwHcOo1IFnkwgx/oCm+kqq895A=";
+  hash = "sha256-4t52ZdoLmFIRDy0xYDULeTqBwpJkIK7q/GgaYrGBNBU=";
   os = "linux";
   arch = "arm64";
 }).overrideAttrs
