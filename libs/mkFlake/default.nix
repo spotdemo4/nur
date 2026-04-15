@@ -97,7 +97,7 @@ eachSystemOp (
   # Merge outputs for each system.
   f: attrs: system:
   let
-    default = f system (mkPackages system { });
+    default = f system (mkPackages system);
 
     # https://github.com/NixOS/nixpkgs/blob/master/lib/systems/examples.nix
     crosspkgs = {
