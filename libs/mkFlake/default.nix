@@ -61,7 +61,7 @@ let
       package.overrideAttrs (
         _: prev: {
           outputs =
-            if prev.stdenv.hostPlatform.isStatic && (!builtins.elem "dev" (prev.outputs or [ ])) then
+            if (prev.stdenv.hostPlatform.isStatic or false) && (!builtins.elem "dev" (prev.outputs or [ ])) then
               (prev.outputs or [ ]) ++ [ "dev" ]
             else
               prev.outputs or [ ];
