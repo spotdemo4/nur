@@ -30,10 +30,21 @@ let
   };
 
   mkPackages =
+    localSystem:
+    import nixpkgs {
+      inherit localSystem;
+      overlays = [
+        overlays.images
+        overlays.libs
+        overlays.packages
+      ];
+      config.allowUnfree = true;
+    };
+
+  mkCrossPackages =
     localSystem: crossSystem:
     import nixpkgs {
-      inherit crossSystem;
-      system = localSystem;
+      inherit localSystem crossSystem;
       overlays = [
         overlays.images
         overlays.libs
@@ -91,37 +102,37 @@ eachSystemOp (
     # https://github.com/NixOS/nixpkgs/blob/master/lib/systems/examples.nix
     crosspkgs = {
       x86_64-linux = f system (
-        mkPackages system {
+        mkCrossPackages system {
           config = "x86_64-unknown-linux-musl";
           isStatic = true;
         }
       );
       aarch64-linux = f system (
-        mkPackages system {
+        mkCrossPackages system {
           config = "aarch64-unknown-linux-musl";
           isStatic = true;
         }
       );
       armv7l-linux = f system (
-        mkPackages system {
+        mkCrossPackages system {
           config = "armv7l-unknown-linux-musleabihf";
           isStatic = true;
         }
       );
       armv6l-linux = f system (
-        mkPackages system {
+        mkCrossPackages system {
           config = "armv6l-unknown-linux-musleabihf";
           isStatic = true;
         }
       );
       x86_64-windows = f system (
-        mkPackages system {
+        mkCrossPackages system {
           config = "x86_64-w64-mingw32";
           libc = "ucrt";
         }
       );
       aarch64-windows = f system (
-        mkPackages system {
+        mkCrossPackages system {
           config = "aarch64-w64-mingw32";
           libc = "ucrt";
           rust.rustcTarget = "aarch64-pc-windows-gnullvm";
@@ -129,14 +140,14 @@ eachSystemOp (
         }
       );
       x86_64-darwin = f system (
-        mkPackages system {
+        mkCrossPackages system {
           config = "x86_64-apple-darwin";
           xcodePlatform = "MacOSX";
           platform = { };
         }
       );
       aarch64-darwin = f system (
-        mkPackages system {
+        mkCrossPackages system {
           config = "arm64-apple-darwin";
           xcodePlatform = "MacOSX";
           platform = { };
