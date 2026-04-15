@@ -175,10 +175,12 @@ eachSystemOp (
                 passthru =
                   (prev.passthru or { })
                   // builtins.listToAttrs (
-                    map (platform: {
-                      name = platform;
-                      value = fixPackage (crosspkgs.${platform}.${key}.${name} or null);
-                    }) (prev.meta.platforms or [ ])
+                    builtins.filter (pv: pv.value != null) (
+                      map (platform: {
+                        name = platform;
+                        value = fixPackage (crosspkgs.${platform}.${key}.${name} or null);
+                      }) (prev.meta.platforms or [ ])
+                    )
                   );
               }
             )
