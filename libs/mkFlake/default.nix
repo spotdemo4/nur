@@ -33,6 +33,7 @@ let
     localSystem: crossSystem:
     import nixpkgs {
       inherit localSystem crossSystem;
+      system = localSystem;
       overlays = [
         overlays.images
         overlays.libs
