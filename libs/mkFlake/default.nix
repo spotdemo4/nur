@@ -32,7 +32,7 @@ let
   mkPackages =
     localSystem: crossSystem:
     import nixpkgs {
-      inherit localSystem crossSystem;
+      inherit crossSystem;
       system = localSystem;
       overlays = [
         overlays.images
