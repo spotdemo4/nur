@@ -71,7 +71,7 @@ let
               (prev.meta or { })
               // {
                 mainProgram =
-                  if prev.stdenv.hostPlatform.isWindows then
+                  if (prev.stdenv.hostPlatform.isWindows or false) then
                     "${prev.meta.mainProgram}.exe"
                   else
                     prev.meta.mainProgram;
