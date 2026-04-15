@@ -59,26 +59,25 @@ let
       null
     else
       package.overrideAttrs (
-        _: prev: {
-          outputs =
-            if (prev.stdenv.hostPlatform.isStatic or false) && (!builtins.elem "dev" (prev.outputs or [ ])) then
-              (prev.outputs or [ ]) ++ [ "dev" ]
-            else
-              prev.outputs or [ ];
-
-          meta =
-            if (prev.meta.mainProgram or null) != null then
-              (prev.meta or { })
-              // {
-                mainProgram =
-                  if (prev.stdenv.hostPlatform.isWindows or false) then
-                    "${prev.meta.mainProgram}.exe"
-                  else
-                    prev.meta.mainProgram;
-              }
-            else
-              prev.meta or { };
-        }
+        _: prev:
+        (
+          if (prev.stdenv.hostPlatform.isStatic or false) && (!builtins.elem "dev" (prev.outputs or [ ])) then
+            {
+              outputs = (prev.outputs or [ ]) ++ [ "dev" ];
+            }
+          else
+            { }
+        )
+        // (
+          if (prev.meta.mainProgram or null) != null && (prev.stdenv.hostPlatform.isWindows or false) then
+            {
+              meta = (prev.meta or { }) // {
+                mainProgram = "${prev.meta.mainProgram}.exe";
+              };
+            }
+          else
+            { }
+        )
       );
 
   # Applies a merge operation across systems.
