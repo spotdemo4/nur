@@ -12,7 +12,14 @@
 assert src != null;
 
 let
-  package = if stdenv.hostPlatform.isStatic then (src.${stdenv.hostPlatform.system} or src) else src;
+  package =
+    if
+      (stdenv.hostPlatform.isStatic || (stdenv.hostPlatform.system != stdenv.buildPlatform.system))
+    then
+      (src.${stdenv.hostPlatform.system} or src)
+    else
+      src;
+
   platforms = [
     "x86_64-linux"
     "x86_64-linux-musl"
