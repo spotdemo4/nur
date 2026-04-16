@@ -188,7 +188,7 @@ eachSystemOp (
                           map (crosspkg: {
                             name = crosspkg.platform.config;
                             value =
-                              if (nixpkgs.lib.meta.availableOn crosspkg.platform package) then
+                              if (nixpkgs.lib.meta.availableOn (nixpkgs.lib.systems.elaborate crosspkg.platform) package) then
                                 fixPackage crosspkg.packages.${key}.${name}
                               else
                                 null;
