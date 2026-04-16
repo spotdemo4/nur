@@ -157,7 +157,7 @@ eachSystemOp (
   let
     flake = f system (mkPackages system);
     crosses = map (platform: {
-      inherit platform;
+      platform = nixpkgs.lib.systems.elaborate platform;
       flake = f system (mkCrossPackages system platform);
     }) platforms;
   in
@@ -188,7 +188,7 @@ eachSystemOp (
                           map (cross: {
                             name = cross.platform.config;
                             value =
-                              if (nixpkgs.lib.meta.availableOn (nixpkgs.lib.systems.elaborate cross.platform) package) then
+                              if (nixpkgs.lib.meta.availableOn cross.platform package) then
                                 fixPackage cross.flake.${key}.${name}
                               else
                                 null;
