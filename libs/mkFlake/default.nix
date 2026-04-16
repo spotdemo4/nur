@@ -189,7 +189,7 @@ eachSystemOp (
                             name = crosspkg.platform.config;
                             value =
                               if (nixpkgs.lib.meta.availableOn crosspkg.platform package) then
-                                fixPackage (crosspkg.packages.${key}.${name} or null)
+                                fixPackage crosspkg.packages.${key}.${name}
                               else
                                 null;
                           }) crosspkgs
