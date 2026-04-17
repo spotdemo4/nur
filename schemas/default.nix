@@ -24,6 +24,23 @@ let
         }) output
       );
 
+    mkApp = system: app: {
+      forSystems = [ system ];
+      evalChecks.isValidApp =
+        app ? type
+        && app.type == "app"
+        && app ? program
+        && builtins.isString app.program
+        &&
+          removeAttrs app [
+            "type"
+            "program"
+            "meta"
+          ] == { };
+      what = "App";
+      shortDescription = app.meta.description or "";
+    };
+
     try =
       e: default:
       let
@@ -51,6 +68,7 @@ let
 in
 {
   appimages = import ./appimages.nix { inherit helpers lib; };
+  apps = import ./apps.nix { inherit helpers; };
   bundlers = import ./bundlers.nix { inherit helpers; };
   checks = import ./checks.nix { inherit helpers; };
   devShells = import ./devShells.nix { inherit helpers; };
