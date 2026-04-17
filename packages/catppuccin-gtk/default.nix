@@ -101,6 +101,7 @@ lib.checkListOfEnum "catppuccin-gtk-theme: theme variants"
     passthru.updateScript = nix-update-script {
       extraArgs = [
         "--commit"
+        "--version=branch=main"
         finalAttrs.pname
       ];
     };
