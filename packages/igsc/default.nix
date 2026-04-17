@@ -35,7 +35,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru.updateScript = nix-update-script {
     extraArgs = [
-      "--version-regex=V(.*)"
+      "--version-regex='V(.*)'"
       "--commit"
       finalAttrs.pname
     ];
