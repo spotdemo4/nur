@@ -32,6 +32,21 @@ let
       if res.success then res.value else default;
 
     isSingle = set: builtins.length (builtins.attrNames set) <= 1;
+
+    platforms = [
+      "x86_64-unknown-linux-gnu"
+      "x86_64-unknown-linux-musl"
+      "aarch64-unknown-linux-gnu"
+      "aarch64-unknown-linux-musl"
+      "armv7l-unknown-linux-gnueabihf"
+      "armv7l-unknown-linux-musleabihf"
+      "armv6l-unknown-linux-gnueabihf"
+      "armv6l-unknown-linux-musleabihf"
+      "x86_64-w64-mingw32"
+      "aarch64-w64-mingw32"
+      "x86_64-apple-darwin"
+      "arm64-apple-darwin"
+    ];
   };
 in
 {
