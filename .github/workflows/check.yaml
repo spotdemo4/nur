@@ -42,6 +42,7 @@ jobs:
             -I "$PWD"
 
   build:
+    needs: check
     strategy:
       matrix:
         nix:
