@@ -11,11 +11,10 @@
   inventory =
     output:
     helpers.mkChildren (
-      builtins.mapAttrs (system: formatter: {
+      builtins.mapAttrs (system: _: {
         forSystems = [ system ];
         what = "Package set";
         shortDescription = "The modified nixpkgs package set used by the project";
-        derivationAttrPath = [ ];
         isFlakeCheck = false;
       }) output
     );
