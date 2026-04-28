@@ -179,10 +179,14 @@ in
 
 # Builds a map from <attr>.value to <attr>.<system>.value for each system.
 eachSystemOp (
-  # Merge outputs for each system.
   f: attrs: system:
+
   let
-    flake = f system (mkPackages system);
+    packages = mkPackages system;
+    flake = (f system packages) // {
+      nixpkgs = packages;
+    };
+
     crosses = map (platform: {
       platform = nixpkgs.lib.systems.elaborate platform;
       flake = f system (mkCrossPackages system platform);
@@ -191,14 +195,16 @@ eachSystemOp (
 
   builtins.foldl' (
     attrs: key:
+
+    # Set as <attr>.value
     if builtins.elem key ignoredAttrs then
-      # Set as <attr>.value
       attrs
       // {
         ${key} = (attrs.${key} or { }) // flake.${key};
       }
+
+    # Set as <attr>.<system>.value that merges cross-compilation outputs for each system
     else if builtins.elem key crossAttrs then
-      # Set as <attr>.<system>.value that merges cross-compilation outputs for each system
       attrs
       // {
         ${key} = (attrs.${key} or { }) // {
@@ -232,8 +238,9 @@ eachSystemOp (
               );
         };
       }
+
+    # Set as <attr>.<system>.value
     else
-      # Set as <attr>.<system>.value
       attrs
       // {
         ${key} = (attrs.${key} or { }) // {
