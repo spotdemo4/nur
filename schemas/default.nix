@@ -58,7 +58,7 @@ in
   formatter = import ./formatter.nix { inherit helpers; };
   images = import ./images.nix { inherit helpers lib; };
   libs = import ./libs.nix { inherit helpers; };
+  nixpkgs = import ./nixpkgs.nix { inherit helpers; };
   packages = import ./packages.nix { inherit helpers lib; };
-  pkgs = import ./pkgs.nix { inherit helpers; };
   schemas = import ./schemas.nix { inherit helpers; };
 }
