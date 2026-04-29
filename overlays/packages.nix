@@ -7,7 +7,7 @@ let
   };
 
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
-    (pythonPackages: import ../packages/python.nix { inherit pythonPackages; })
+    (pythonPackages: _: import ../packages/python.nix { inherit pythonPackages; })
   ];
 in
 prev
