@@ -44,8 +44,7 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   installPhase = ''
-    mkdir -p $out/bin
-    cp nix-fix-hash.sh $out/bin/nix-fix-hash
+    install -D nix-fix-hash.sh $out/bin/fix-hash
   '';
 
   dontFixup = true;
@@ -58,7 +57,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   meta = {
-    mainProgram = "nix-fix-hash";
+    mainProgram = "fix-hash";
     description = "Nix hash fixer";
     platforms = lib.platforms.all;
     homepage = "https://github.com/spotdemo4/nix-fix-hash";
