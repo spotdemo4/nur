@@ -246,7 +246,7 @@ eachSystemOp (
                     res = builtins.tryEval package;
                   in
                   if res.success then
-                    true
+                    lib.meta.availableOn { inherit system; } package
                   else
                     builtins.warn "Failed to evaluate ${key}.${_} for system ${system}: ${res.error}" false
                 ) flake.${key}
