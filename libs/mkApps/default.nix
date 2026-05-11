@@ -1,38 +1,34 @@
 {
-  lib,
   replaceVars,
   stdenvNoCC,
 }:
 
 builtins.mapAttrs (
   name: script:
-  if lib.isDerivation script then
-    script
-  else
-    let
-      program = stdenvNoCC.mkDerivation (finalAttrs: {
-        inherit name;
+  let
+    program = stdenvNoCC.mkDerivation (finalAttrs: {
+      inherit name;
 
-        app = replaceVars ./app.sh {
-          inherit script;
-        };
-
-        dontUnpack = true;
-        dontConfigure = true;
-        dontBuild = true;
-        doCheck = false;
-
-        installPhase = ''
-          install -D ${finalAttrs.app} $out/bin/${name}
-        '';
-      });
-    in
-    {
-      type = "app";
-      program = "${program}/bin/${name}";
-      meta = {
+      app = replaceVars ./app.sh {
         inherit script;
-        description = script;
       };
-    }
+
+      dontUnpack = true;
+      dontConfigure = true;
+      dontBuild = true;
+      doCheck = false;
+
+      installPhase = ''
+        install -D ${finalAttrs.app} $out/bin/${name}
+      '';
+    });
+  in
+  {
+    type = "app";
+    program = "${program}/bin/${name}";
+    meta = {
+      inherit script;
+      description = script;
+    };
+  }
 )
