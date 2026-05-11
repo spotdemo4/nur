@@ -248,7 +248,7 @@ eachSystemOp (
                   if res.success then
                     lib.meta.availableOn { inherit system; } package
                   else
-                    builtins.warn "Failed to evaluate ${key}.${_} for system ${system}: ${res.error}" false
+                    builtins.warn "Failed to evaluate ${key}.${_} for system ${system}" false
                 ) flake.${key}
               );
         };
