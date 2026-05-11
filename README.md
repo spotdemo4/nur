@@ -119,12 +119,12 @@ buildInputs = with pkgs.python314Packages; [
 ];
 ```
 
-### [nix-fix-hash](https://github.com/spotdemo4/nix-fix-hash)
+### [fix-hash](https://github.com/spotdemo4/nix-fix-hash)
 
 Nix hash fixer
 
 ```elm
-nix run github:spotdemo4/trevpkgs#nix-fix-hash
+nix run github:spotdemo4/trevpkgs#fix-hash
 ```
 
 ### [nix-scan](https://github.com/spotdemo4/nix-scan)
