@@ -241,7 +241,14 @@ eachSystemOp (
               )
               (
                 lib.filterAttrs (
-                  _: package: lib.meta.availableOn { inherit system; } (tryEval package)
+                  _: package:
+                  let
+                    res = builtins.tryEval package;
+                  in
+                  if res.success then
+                    true
+                  else
+                    builtins.warn "Failed to evaluate ${key}.${_} for system ${system}: ${res.error}" false
                 ) flake.${key}
               );
         };
