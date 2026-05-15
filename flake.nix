@@ -108,6 +108,7 @@
               treefmt
 
               # util
+              nix-init
               nix-update
               gh
               action-validator
