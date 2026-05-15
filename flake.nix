@@ -113,7 +113,7 @@
               gh
               action-validator
               octoscan
-              (pkgs.callPackage ./packages/nix-fix-hash { })
+              (pkgs.callPackage ./packages/fix-hash { })
               (pkgs.callPackage ./packages/fetch-hash { })
             ];
           };
@@ -127,7 +127,7 @@
           update = pkgs.mkShell {
             packages = with pkgs; [
               nix-update
-              (pkgs.callPackage ./packages/nix-fix-hash { })
+              (pkgs.callPackage ./packages/fix-hash { })
               (pkgs.callPackage ./packages/renovate { })
             ];
           };
